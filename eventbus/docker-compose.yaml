@@ -1,0 +1,29 @@
+# compose syntax version.
+version: "3.7"
+
+networks:
+  pucminas:
+    external: true
+
+# services declaration.
+services:
+  # MessageBroker
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-server
+    ports:
+      - 15672:15672
+      - 5672:5672
+      # - target: 15672
+      #   published: 15672
+      # - target: 5672
+      #   published: 5672
+    # environment:
+    #   - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=1024MiB
+    networks:
+      - pucminas
+    # depends_on:
+    #   - web
+  #App  
+
+ 
