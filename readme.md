@@ -37,3 +37,12 @@
 
         A porta do Rabbitmq é a 5672 e o management na porta 15672, com usuário e senha padrões : guest e guest
 
+
+ ## Acessando o Konga
+
+       A partir da URL http://localhost:1337 com usuario admin e senha admin123
+
+## Acessando o pgadmin4
+
+       A partir da URL http://localhost:15432 com usuario king@kong.com e senha kong
+
