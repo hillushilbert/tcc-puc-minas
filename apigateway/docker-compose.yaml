@@ -99,8 +99,30 @@ services:
     tty: true
     networks:
       - pucminas
-    # volumes:
-    #   - kong_data:/var/lib/postgresql/data
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: king@kong.com
+      PGADMIN_DEFAULT_PASSWORD: kong
+    restart: on-failure
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    deploy:
+      restart_policy:
+        condition: on-failure
+    tty: true
+    ports:
+      - "15432:80"
+    networks:
+      - pucminas
+    restart: on-failure
+    depends_on:
+      - db
+      
 
   konga-prepare:
     container_name: konga-prepare
