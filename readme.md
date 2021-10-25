@@ -46,3 +46,50 @@
 
        A partir da URL http://localhost:15432 com usuario king@kong.com e senha kong
 
+## Links 
+
+ - **Kong e Konga** (https://www.youtube.com/watch?v=_2GRXgYswhI)
+
+
+
+ # Escopo Serviços 
+
+       1 - Implementar um serviço de geração de OS que:
+ - comunicação com o frontend
+ - recebe um pedido de geração de OS a partir do fronted (através do api gateway)
+  POST 
+	pedido: 
+	{
+		cliente: João
+		endereço cliente:  Rua das Marrecas, 34
+		endereço coleta: Rua dos Pepinos, 200
+		produto: "guitarra",
+		fornecedor: Americanas,
+		preço: 2500
+	}
+
+	retornar um id do pedido
+
+	GET/pedido
+
+	{
+		dados do pedido
+	}
+
+- despacho da OS para transporte
+	- envio: pedido será enviado para a fila do serviço de despacho de encomenda	
+
+2 - Api gateway 
+	- cadastrar o serviço (rota, url)
+	- autenticação do usuário via jwt
+	- no postman conectar usando jwt
+
+3 - serviço de despacho de encomenda
+- pega o pedido na fila do rabbit
+- despacha a encomenda
+- envia o status de despacho feito para uma fila no rabbit
+
+4 - serviço de envio de notificação para o usuário final com o CT-e ou link para acompanhamento do andamento do transporte
+	- recebe do rabbit
+	- envia e-mail
+

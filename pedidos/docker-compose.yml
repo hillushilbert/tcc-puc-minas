@@ -1,0 +1,30 @@
+# compose syntax version.
+version: "3.6"
+
+# services declaration.
+services:
+  # Web Application
+  app:
+    build:
+      args:
+        user: apppedido
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: hillushilbert/app-pedidos:latest
+    # volumes:
+    #   - .:/var/www/
+    container_name: pedidos-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - .:/var/www
+    networks:
+      - pucminas
+    command: bash -c "composer install && php artisan serve --host=0.0.0.0 --port=8010"
+    ports:
+      - 8010:8010
+
+networks:
+  pucminas:
+    external: true
