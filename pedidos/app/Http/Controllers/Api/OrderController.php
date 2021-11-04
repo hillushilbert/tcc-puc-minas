@@ -5,14 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\Leverempresa;
-use App\Models\Leverlote as LeverLote;
-use App\Models\Leveroperacao;
-use App\Models\Leveroperadora;
 use App\Models\Order;
-use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**

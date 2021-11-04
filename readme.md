@@ -57,7 +57,8 @@
        1 - Implementar um serviço de geração de OS que:
  - comunicação com o frontend
  - recebe um pedido de geração de OS a partir do fronted (através do api gateway)
-  POST 
+  	
+	POST 
 	pedido: 
 	{
 		cliente: João
@@ -70,14 +71,14 @@
 
 	retornar um id do pedido
 
-	GET/pedido
+	GET /pedido
 
 	{
 		dados do pedido
 	}
 
-- despacho da OS para transporte
-	- envio: pedido será enviado para a fila do serviço de despacho de encomenda	
+ - despacho da OS para transporte
+ - envio: pedido será enviado para a fila do serviço de despacho de encomenda	
 
 2 - Api gateway 
 	- cadastrar o serviço (rota, url)
