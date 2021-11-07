@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests;
+use App\Application\Interfaces\IListOrder;
+use App\Application\Interfaces\IStoreOrder;
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Order;
+use App\Http\Requests\StoreOrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @OA\Info(title="Sin-ticketing", version="0.1")
+ * @OA\Info(title="API Pedidos", version="0.1")
  * 
  * @OA\SecurityScheme(
  *      securityScheme="bearerAuth",
@@ -25,12 +25,19 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     
+    private $storeOrder;
+    
+    public function __construct(IStoreOrder $storeOrder, IListOrder $listOrder)
+    {
+        $this->storeOrder = $storeOrder;
+        $this->listOrder = $listOrder;
+    }
 
     /**
      * @OA\Get(
-     *     path="/api/usuario",
-     *     description="Retorna a lista de usuarios",
-     *      tags={"Usuario"},
+     *     path="/api/orders",
+     *     description="Retorna uma lista de pedidos",
+     *      tags={"Order"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
@@ -46,8 +53,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = new Order(); 
-        $order = $query->paginate(25);
+        $order = $this->listOrder->execute();
         return response()->json($order);
     }
 
@@ -58,23 +64,14 @@ class OrderController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/usuario",
-     *     operationId="storeUsuario",
-     *     description="Armazena um novo usuario",
+     *     path="/api/orders",
+     *     operationId="storeOrder",
+     *     description="Armazena um novo pedido",
      *     security={{"bearerAuth":{}}},
-     *     tags={"Usuario"},
+     *     tags={"Order"},
      *     @OA\RequestBody(
-     *      @OA\JsonContent(
-     *        type="object",
-     *        @OA\Property(property="codigo", type="string"),
-     *        @OA\Property(property="nome", type="string"),
-     *        @OA\Property(property="email", type="string"),
-     *        @OA\Property(property="status", type="string"),
-     *        @OA\Property(property="permissao", type="string"),
-     *        @OA\Property(property="grupoEconomico", type="string"),
-     *        @OA\Property(property="criadoEm", type="string"),
-     *        @OA\Property(property="atualizadoEm", type="string"),
-     *      )
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Order"),
      *    ),
      *     @OA\Response(
      *         response=201,
@@ -88,26 +85,23 @@ class OrderController extends Controller
      *     )
      * )
      */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
         try
 		{
-			$this->validate($request, [
-                'email'       => 'required|max:255',
-                'name'       => 'required|max:255',
-                'birth_date' => 'required'
-            ]);
 
-            
-            $requestData = $request->all();
-            $customer = Customer::create($requestData);
+            $order = $this->storeOrder->execute($request);
 
-            return response()->json(['data'=>$customer], 201);
+            return response()
+                ->json([
+                    'success' => true,
+                    'id' => $order->id
+                ]);
 		}
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollBack();
-			return response()->json(['errors'=>$e->getMessage()], 400);
+			return response()->json(['errors'=>$e->getMessage(),'file'=>$e->getFile(),'line'=>$e->getLine()], 400);
 		}
         catch(\Illuminate\Validation\ValidationException $e)
         {
@@ -116,7 +110,7 @@ class OrderController extends Controller
         catch (\Exception $e)
         {
             DB::rollBack();
-		    return response()->json(['errors'=>$e->getMessage()], 400);
+		    return response()->json(['errors'=>$e->getMessage(),'file'=>$e->getFile(),'line'=>$e->getLine()], 400);
         }
     }
 

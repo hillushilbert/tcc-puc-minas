@@ -14,33 +14,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-/**
- * @OA\Info(title="Sin-ticketing", version="0.1")
- * 
- * @OA\SecurityScheme(
- *      securityScheme="bearerAuth",
- *      in="header",
- *      name="Authorization",
- *      type="http",
- *      scheme="bearer",
- *      bearerFormat="JWT",
- * ),
- * 
- */
+
 class CustomerController extends Controller
 {
     
 
     /**
      * @OA\Get(
-     *     path="/api/usuario",
+     *     path="/api/customer",
      *     description="Retorna a lista de usuarios",
      *      tags={"Usuario"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent()
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Customer")
+     *         ),
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -64,28 +55,20 @@ class CustomerController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/usuario",
-     *     operationId="storeUsuario",
+     *     path="/api/customer",
+     *     operationId="storeCustomer",
      *     description="Armazena um novo usuario",
      *     security={{"bearerAuth":{}}},
      *     tags={"Usuario"},
      *     @OA\RequestBody(
-     *      @OA\JsonContent(
-     *        type="object",
-     *        @OA\Property(property="codigo", type="string"),
-     *        @OA\Property(property="nome", type="string"),
-     *        @OA\Property(property="email", type="string"),
-     *        @OA\Property(property="status", type="string"),
-     *        @OA\Property(property="permissao", type="string"),
-     *        @OA\Property(property="grupoEconomico", type="string"),
-     *        @OA\Property(property="criadoEm", type="string"),
-     *        @OA\Property(property="atualizadoEm", type="string"),
-     *      )
-     *    ),
+     *         description="Pet object that needs to be added to the store",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Customer"),
+     *     ),
      *     @OA\Response(
      *         response=201,
      *         description="OK",
-     *         @OA\JsonContent()
+     *         @OA\JsonContent(ref="#/components/schemas/Customer")
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -114,7 +97,7 @@ class CustomerController extends Controller
             $customer->save();
 
             
-            return response()->json(['data'=>$customer], 201);
+            return response()->json(['data'=>$customer->id], 201);
 		}
         catch(\Illuminate\Database\QueryException $e)
         {

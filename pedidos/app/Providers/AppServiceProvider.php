@@ -24,5 +24,34 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        $this->app->bind(
+            'App\Http\Interfaces\IOrderRepository',
+            'App\Http\Repository\OrderRepository'
+        );
+
+        $this->app->bind(
+            'App\Http\Interfaces\ISupplierRepository',
+            'App\Http\Repository\SupplierRepository'
+        );
+
+        $this->app->bind(
+            'App\Http\Interfaces\IAdressRepository',
+            'App\Http\Repository\AdressRepository'
+        );
+
+        $this->app->bind(
+            'App\Http\Interfaces\ICustomerRepository',
+            'App\Http\Repository\CustomerRepository'
+        );
+
+        $this->app->bind(
+            'App\Application\Interfaces\IStoreOrder',
+            'App\Application\StoreOrder'
+        );        
+        
+        $this->app->bind(
+            'App\Application\Interfaces\IListOrder',
+            'App\Application\ListOrder'
+        );
     }
 }

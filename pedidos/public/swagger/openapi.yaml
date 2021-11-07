@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  title: 'API Pedidos'
+  version: '0.1'
+paths:
+  /api/customer:
+    get:
+      tags:
+        - Usuario
+      description: 'Retorna a lista de usuarios'
+      operationId: 785bf2d6b89eaeaddc13796bc2ce3fe2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    post:
+      tags:
+        - Usuario
+      description: 'Armazena um novo usuario'
+      operationId: storeCustomer
+      requestBody:
+        description: 'Pet object that needs to be added to the store'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+  /api/orders:
+    get:
+      tags:
+        - Order
+      description: 'Retorna uma lista de pedidos'
+      operationId: 955bb77a45ae173a485fadb8befed93f
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: {  }
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    post:
+      tags:
+        - Order
+      description: 'Armazena um novo pedido'
+      operationId: storeOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema: {  }
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+components:
+  schemas:
+    NewCustomer:
+      required:
+        - name
+    Customer:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/Customer'
+        -
+          required:
+            - name
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+            email:
+              type: string
+              format: email
+            birth_date:
+              type: string
+              format: date-time
+          type: object
+    Adress:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/Adress'
+        -
+          required:
+            - name
+          properties:
+            street:
+              type: string
+            number:
+              type: integer
+              format: int64
+            city:
+              type: string
+            state:
+              type: string
+            country:
+              type: string
+            active:
+              type: boolean
+          type: object
+    Supplier:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/Supplier'
+        -
+          required:
+            - name
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+            email:
+              type: string
+          type: object
+    Order:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/Order'
+        -
+          required:
+            - customer
+          properties:
+            customer:
+              $ref: '#/components/schemas/Customer'
+            origin_adress:
+              $ref: '#/components/schemas/Adress'
+            destination_adress:
+              $ref: '#/components/schemas/Adress'
+            supplier:
+              $ref: '#/components/schemas/Supplier'
+            unity:
+              type: string
+            weight:
+              type: number
+            height:
+              type: number
+            width:
+              type: number
+            length:
+              type: number
+          type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: Authorization
+      in: header
+      bearerFormat: JWT
+      scheme: bearer

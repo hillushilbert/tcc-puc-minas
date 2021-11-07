@@ -24,22 +24,22 @@ class Order extends Model {
 
     public function customer()
     {
-        return $this->belongsTo('App\Customer','customer_id','id');
+        return $this->belongsTo('App\Models\Customer','customer_id','id');
     }
 
     public function supplier()
     {
-        return $this->belongsTo('App\Supplier','customer_id','id');
+        return $this->belongsTo('App\Models\Supplier','customer_id','id');
     }
 
     public function origin()
     {
-        return $this->belongsTo('App\Adress','origin_adress_id','id');
+        return $this->belongsTo('App\Models\Adress','origin_adress_id','id');
     }
 
     public function destiny()
     {
-        return $this->belongsTo('App\Adress','destination_adress_id','id');
+        return $this->belongsTo('App\Models\Adress','destination_adress_id','id');
     }
 
 }
