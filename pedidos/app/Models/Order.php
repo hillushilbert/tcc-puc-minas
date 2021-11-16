@@ -42,4 +42,18 @@ class Order extends Model {
         return $this->belongsTo('App\Models\Adress','destination_adress_id','id');
     }
 
+    public function exportToJson()
+    {
+        $this->customer;
+        $this->supplier;
+        $this->origin;
+        $this->destiny;
+        $record = json_decode($this->toJson());
+        unset($record->customer_id);
+        unset($record->origin_adress_id);
+        unset($record->destination_adress_id);
+        unset($record->supplier_id);
+        return $record;
+    }
+
 }

@@ -2,24 +2,14 @@
 
 namespace App\Application;
 
-use App\Application\Interfaces\IEnrollRepository;
-use App\Application\Interfaces\IFindCourseById;
-use App\Application\Interfaces\IFindIfStudentIsEnrolled;
-use App\Application\Interfaces\IFindStudentWithCoursesById;
+
 use App\Application\Interfaces\IStoreOrder;
-use App\Application\Interfaces\ITotalStudentCredits;
-use App\Course;
-use App\Exceptions\EnrollmentErrorException;
 use App\Http\Interfaces\IAdressRepository;
 use App\Http\Interfaces\ICustomerRepository;
-use App\Http\Interfaces\IEnroll;
 use App\Http\Interfaces\IOrderRepository;
 use App\Http\Interfaces\ISupplierRepository;
-use App\Http\Requests\EnrollStudentRequest;
+use App\Http\Interfaces\IPublishNewOrder;
 use App\Http\Requests\StoreOrderRequest;
-use App\Models\Adress;
-use App\Models\Order;
-use App\Student;
 
 class StoreOrder implements IStoreOrder
 {
@@ -29,12 +19,14 @@ class StoreOrder implements IStoreOrder
     private $supplierRepository;
 
     public function __construct(IOrderRepository $orderRepository, IAdressRepository $adressRepository,
-                                ICustomerRepository $customerRepository, ISupplierRepository $supplierRepository)
+                                ICustomerRepository $customerRepository, ISupplierRepository $supplierRepository,
+                                IPublishNewOrder $publishNewOrder)
     {
         $this->orderRepository = $orderRepository;
         $this->adressRepository = $adressRepository;
         $this->customerRepository = $customerRepository;
         $this->supplierRepository = $supplierRepository;
+        $this->publishNewOrder = $publishNewOrder;
     }
 
     public function execute(StoreOrderRequest $request)
@@ -78,6 +70,10 @@ class StoreOrder implements IStoreOrder
         $order->supplier_id = $supplier->id;
 
         $this->orderRepository->persist($order);
+
+        // publica nova order
+        $this->publishNewOrder->send($order);
+        
         return $order; // remover
     }
 }

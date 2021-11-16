@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-class CustomerController extends Controller
+class SupplierController extends Controller
 {
     
 
     /**
      * @OA\Get(
-     *     path="/api/customer",
-     *     operationId="indexCustomer",
+     *     path="/api/supplier",
      *     description="Retorna a lista de usuarios",
      *      tags={"Domain"},
      *     security={{"bearerAuth":{}}},
@@ -24,19 +23,19 @@ class CustomerController extends Controller
      *         description="OK",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Customer")
+     *             @OA\Items(ref="#/components/schemas/Supplier")
      *         ),
      *     ),
      *     @OA\Response(
      *         response=422,
      *         description="Missing Data",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorModel")
+     *         @OA\JsonContent()
      *     )
      * )
      */
     public function index(Request $request)
     {
-        $query = new Customer(); 
+        $query = new Supplier(); 
         $customer = $query->paginate(25);
         return response()->json($customer);
     }
@@ -44,15 +43,14 @@ class CustomerController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/customer/{id}",
-     *     operationId="showCustomer",
-     *     description="Retorna um Cliente por id",
+     *     path="/api/supplier/{id}",
+     *     description="Retorna um Fornecedor por id",
      *     tags={"Domain"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id do cliente",
+     *         description="id do fornecedor",
      *         required=true,
      *         @OA\Schema(
      *             type="integer",
@@ -67,37 +65,37 @@ class CustomerController extends Controller
      *     @OA\Response(
      *         response=422,
      *         description="Missing Data",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorModel")
+     *         @OA\JsonContent()
      *     )
      * )
      */ 
     public function show(Request $request,$id)
     {
-        $customer = Customer::findOrFail($id); 
-        return response()->json(['data'=>$customer],200);
+        $supplier = Supplier::findOrFail($id); 
+        return response()->json(['data'=>$supplier],200);
     }
 
     /**
      * @OA\Post(
-     *     path="/api/customer",
-     *     operationId="storeCustomer",
-     *     description="Armazena um novo usuario",
+     *     path="/api/supplier",
+     *     operationId="storeSupplier",
+     *     description="Armazena um novo fornecedor",
      *     security={{"bearerAuth":{}}},
      *     tags={"Domain"},
      *     @OA\RequestBody(
      *         description="Pet object that needs to be added to the store",
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Customer"),
+     *         @OA\JsonContent(ref="#/components/schemas/Supplier"),
      *     ),
      *     @OA\Response(
      *         response=201,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/Customer")
+     *         @OA\JsonContent(ref="#/components/schemas/Supplier")
      *     ),
      *     @OA\Response(
      *         response=422,
      *         description="Missing Data",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorModel")
+     *         @OA\JsonContent()
      *     )
      * )
      */
@@ -108,14 +106,13 @@ class CustomerController extends Controller
 			$this->validate($request, [
                 'email'       => 'required|max:255',
                 'name'       => 'required|max:255',
-                'birth_date' => 'required'
             ]);
 
             
             $find = $request->only(['email']);
-            $customer = Customer::firstOrNew($find);
+            $customer = Supplier::firstOrNew($find);
 
-            $requestData = $request->only(['email','name','birth_date']);
+            $requestData = $request->only(['email','name']);
             
             $customer->fill($requestData);
             $customer->save();
@@ -139,18 +136,17 @@ class CustomerController extends Controller
         }
     }
 
-
     /**
      * @OA\Patch(
-     *     path="/api/customer/{id}",
-     *     operationId="updateCustomer",
-     *     description="Atualiza um cliente",
+     *     path="/api/supplier/{id}",
+     *     operationId="updateSupplier",
+     *     description="Atualiza um fornecedor",
      *     security={{"bearerAuth":{}}},
      *     tags={"Domain"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id do cliente",
+     *         description="id do fornecedor",
      *         required=true,
      *         @OA\Schema(
      *             type="integer",
@@ -158,14 +154,14 @@ class CustomerController extends Controller
      *         )
      *     ),
      *     @OA\RequestBody(
-     *         description="Objeto Cliente a ser atualizado",
+     *         description="Objeto Forncedor a ser atualizado",
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Customer"),
+     *         @OA\JsonContent(ref="#/components/schemas/Supplier"),
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/Customer")
+     *         @OA\JsonContent(ref="#/components/schemas/Supplier")
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -185,9 +181,9 @@ class CustomerController extends Controller
             ]);
 
             
-            $customer = Customer::findOrFail($id);
+            $customer = Supplier::findOrFail($id);
 
-            $requestData = $request->only(['email','name','birth_date']);
+            $requestData = $request->only(['email','name']);
             
             $customer->update($requestData);
             
@@ -209,11 +205,40 @@ class CustomerController extends Controller
         }
     } 
 
+
+
+/**
+     * @OA\Delete(
+     *     path="/api/supplier/{id}",
+     *     operationId="deleteSupplier",
+     *     description="Exclui um fornecedor",
+     *     security={{"bearerAuth":{}}},
+     *     tags={"Domain"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id do fornecedor",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Missing Data",
+     *         @OA\JsonContent()
+     *     )
+     * )
+     */
     public function destroy(Request $request,$id)
     {
-        Customer::destroy($id);
+        Supplier::destroy($id);
         return response()->json(['data'=>['success'=>true]], 204);
-
     } 
 
 }

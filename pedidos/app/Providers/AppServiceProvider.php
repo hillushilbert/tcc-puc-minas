@@ -53,5 +53,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Application\Interfaces\IListOrder',
             'App\Application\ListOrder'
         );
+
+        $this->app->bind(
+            'App\Application\Interfaces\IPublishNewOrder',
+            'App\Application\PublishNewOrder'
+        );
     }
 }

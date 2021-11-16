@@ -6,6 +6,7 @@ use App\Application\Interfaces\IListOrder;
 use App\Application\Interfaces\IStoreOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -57,9 +58,39 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
-    public function show()
-    {
 
+    /**
+     * @OA\Get(
+     *     path="/api/orders/{id}",
+     *     description="Retorna um pedido por id",
+     *     tags={"Order"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id do pedido",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64",
+     *         )
+     *     ),
+     * @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\JsonContent(ref="#/components/schemas/Order"),
+     * ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Missing Data",
+     *         @OA\JsonContent()
+     *     )
+     * )
+     */    
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+        return response(['data'=>$order->exportToJson()],200);
     }
 
     /**
@@ -89,9 +120,10 @@ class OrderController extends Controller
     {
         try
 		{
-
+            DB::beginTransaction();
             $order = $this->storeOrder->execute($request);
-
+            DB::commit();
+            
             return response()
                 ->json([
                     'success' => true,
@@ -116,12 +148,12 @@ class OrderController extends Controller
 
     public function update()
     {
-
+        return abort(405,'Não implementado');
     } 
 
     public function delete()
     {
-
+        return abort(405,'Não implementado');
     } 
 
 }
