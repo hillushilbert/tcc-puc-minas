@@ -42,7 +42,11 @@ class StoreOrder implements IStoreOrder
         $this->adressRepository->persist($adressOrigin);
   
         // pesquisa pelo enderco de entrega
-        $adressDestiny = $this->adressRepository->findByStreetAndNumber($request->destination_adress['street'],$request->destination_adress['number']);
+        $adressDestiny = $this->adressRepository->findByStreetAndNumber(
+            $request->destination_adress['street'],
+            $request->destination_adress['number']
+        );
+        
         if(!$adressDestiny)
         {
             $addr = $request->destination_adress;

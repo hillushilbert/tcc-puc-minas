@@ -4,7 +4,6 @@ namespace App\Http\Repository;
 
 use App\Http\Interfaces\ISupplierRepository;
 use App\Models\Supplier;
-use stdClass;
 
 class SupplierRepository implements ISupplierRepository
 {
