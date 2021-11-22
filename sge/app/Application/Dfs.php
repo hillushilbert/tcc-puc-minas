@@ -46,6 +46,7 @@ class Dfs {
     {
         $return = [];
         $min = 9999999999999999999999;
+        $rota_array = null;
         foreach($rotas as $strRota)
         {
             $rota = substr($strRota,2);
@@ -63,6 +64,7 @@ class Dfs {
 
             if($distanciaTotal < $min){
                 $min = $distanciaTotal;
+                $rota_array = $rota;
             }
 
             $return[$distanciaTotal][] = $strRota;
@@ -70,7 +72,8 @@ class Dfs {
         
         return [
             'distancia' => $min,
-            'rotas'=> $return[$min]
+            'rotas'=> $return[$min],
+            'rota_array' => $rota_array
         ];
     }
 }
