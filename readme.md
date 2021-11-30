@@ -43,6 +43,9 @@
 
        A partir da URL http://localhost:1337 com usuario admin e senha admin123
 
+	   Tutorial kong e konga 
+	   https://medium.com/@tselentispanagis/managing-microservices-and-apis-with-kong-and-konga-7d14568bb59d
+
 ## Acessando o pgadmin4
 
        A partir da URL http://localhost:15432 com usuario king@kong.com e senha kong

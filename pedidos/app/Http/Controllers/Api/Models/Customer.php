@@ -82,3 +82,17 @@ namespace App\Http\Controllers\Api\Models;
  *   }
  * )
  */
+
+  /**
+ *  @OA\Schema(
+ *   schema="ErrorModel",
+ *   type="object",
+ *   allOf={
+ *       @OA\Schema(ref="#/components/schemas/ErrorModel"),
+ *       @OA\Schema(
+ *           @OA\Property(property="message", type="string"),
+ *           @OA\Property(property="status", type="number"),
+ *       )
+ *   }
+ * )
+ */

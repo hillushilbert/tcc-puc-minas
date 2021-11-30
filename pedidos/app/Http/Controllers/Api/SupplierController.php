@@ -14,7 +14,7 @@ class SupplierController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/supplier",
+     *     path="/api/suppliers",
      *     description="Retorna a lista de usuarios",
      *      tags={"Domain"},
      *     security={{"bearerAuth":{}}},
@@ -43,7 +43,7 @@ class SupplierController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/supplier/{id}",
+     *     path="/api/suppliers/{id}",
      *     description="Retorna um Fornecedor por id",
      *     tags={"Domain"},
      *     security={{"bearerAuth":{}}},
@@ -77,7 +77,7 @@ class SupplierController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/supplier",
+     *     path="/api/suppliers",
      *     operationId="storeSupplier",
      *     description="Armazena um novo fornecedor",
      *     security={{"bearerAuth":{}}},
@@ -138,7 +138,7 @@ class SupplierController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/supplier/{id}",
+     *     path="/api/suppliers/{id}",
      *     operationId="updateSupplier",
      *     description="Atualiza um fornecedor",
      *     security={{"bearerAuth":{}}},
@@ -209,7 +209,7 @@ class SupplierController extends Controller
 
 /**
      * @OA\Delete(
-     *     path="/api/supplier/{id}",
+     *     path="/api/suppliers/{id}",
      *     operationId="deleteSupplier",
      *     description="Exclui um fornecedor",
      *     security={{"bearerAuth":{}}},

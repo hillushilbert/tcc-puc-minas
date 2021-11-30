@@ -6,9 +6,9 @@ paths:
   /api/customer:
     get:
       tags:
-        - Usuario
+        - Domain
       description: 'Retorna a lista de usuarios'
-      operationId: 785bf2d6b89eaeaddc13796bc2ce3fe2
+      operationId: indexCustomer
       responses:
         '200':
           description: OK
@@ -22,13 +22,14 @@ paths:
           description: 'Missing Data'
           content:
             application/json:
-              schema: {  }
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
       security:
         -
           bearerAuth: []
     post:
       tags:
-        - Usuario
+        - Domain
       description: 'Armazena um novo usuario'
       operationId: storeCustomer
       requestBody:
@@ -49,7 +50,76 @@ paths:
           description: 'Missing Data'
           content:
             application/json:
-              schema: {  }
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+      security:
+        -
+          bearerAuth: []
+  '/api/customer/{id}':
+    get:
+      tags:
+        - Domain
+      description: 'Retorna um Cliente por id'
+      operationId: showCustomer
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do cliente'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+      security:
+        -
+          bearerAuth: []
+    patch:
+      tags:
+        - Domain
+      description: 'Atualiza um cliente'
+      operationId: updateCustomer
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do cliente'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: 'Objeto Cliente a ser atualizado'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
       security:
         -
           bearerAuth: []
@@ -95,6 +165,178 @@ paths:
           content:
             application/json:
               schema: {  }
+      security:
+        -
+          bearerAuth: []
+  '/api/orders/{id}':
+    get:
+      tags:
+        - Order
+      description: 'Retorna um pedido por id'
+      operationId: 88d27387b1e409e075c18609d4a0c300
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do pedido'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+  /api/suppliers:
+    get:
+      tags:
+        - Domain
+      description: 'Retorna a lista de usuarios'
+      operationId: 6207e57dd1dcd1d6e7125fe144607196
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    post:
+      tags:
+        - Domain
+      description: 'Armazena um novo fornecedor'
+      operationId: storeSupplier
+      requestBody:
+        description: 'Pet object that needs to be added to the store'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+  '/api/suppliers/{id}':
+    get:
+      tags:
+        - Domain
+      description: 'Retorna um Fornecedor por id'
+      operationId: 7fc447855461518ce36bdeb5a44310a3
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do fornecedor'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    delete:
+      tags:
+        - Domain
+      description: 'Exclui um fornecedor'
+      operationId: deleteSupplier
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do fornecedor'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: OK
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    patch:
+      tags:
+        - Domain
+      description: 'Atualiza um fornecedor'
+      operationId: updateSupplier
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do fornecedor'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: 'Objeto Forncedor a ser atualizado'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
       security:
         -
           bearerAuth: []
@@ -190,6 +432,18 @@ components:
             width:
               type: number
             length:
+              type: number
+          type: object
+    ErrorModel:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/ErrorModel'
+        -
+          properties:
+            message:
+              type: string
+            status:
               type: number
           type: object
   securitySchemes:

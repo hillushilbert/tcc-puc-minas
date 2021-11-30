@@ -1,0 +1,56 @@
+version: '3.7'
+
+networks:
+  pucminas:
+    external: true
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.14.1
+    container_name: elasticsearch
+    volumes:
+      # - ./docker-compose/elasticsearch/config/elasticsearch.yml:/lib/elasticsearch/config/elasticsearch.yml
+      # - ./docker-compose/elasticsearch/config/elastic-stack-ca.p12:/lib/elasticsearch/elastic-stack-ca.p12
+      # - ./docker-compose/elasticsearch/config/elastic-certificates.p12:/lib/elasticsearch/config/elastic-certificates.p12
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+    ports:
+     - 9200:9200
+     - 9300:9300
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms1024m -Xmx1024m"
+      xpack.monitoring.enabled: "true"
+    restart: unless-stopped
+    networks:
+      - pucminas
+  ##docker run -d --name logstash -v d:/development/api-management/logstash/pipeline:/usr/share/logstash/pipeline/ logstash:7.9.2
+  logstach:
+    image: logstash:7.14.1
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    ports:
+     - 5555:5555
+     - 5044:5044
+     - 9600:9600
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    volumes:
+      - ./logstash:/usr/share/logstash/pipeline
+    networks:
+      - pucminas
+
+  kibana:
+    image: kibana:7.14.1
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+     - 5601:5601
+    volumes:
+      - ./kibana/data:/usr/share/kibana/data
+    depends_on:
+      - elasticsearch
+    networks:
+      - pucminas
