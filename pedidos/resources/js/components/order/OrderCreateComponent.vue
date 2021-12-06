@@ -3,13 +3,13 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">Novo Aluno</div>
+          <div class="card-header">Novo Pedido</div>
           <div class="card-body">
             <a href="/student" class="btn btn-primary mb-3"
               ><i class="fas fa-arrow-left"></i> Voltar</a
             >
             <form v-on:submit.prevent>
-              <div class="form-row">
+              <div class="row">
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                   <label for="name">Nome</label>
                   <input
@@ -25,26 +25,26 @@
                 </div>
 
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="date_birth">Data de Nascimento</label>
+                  <label for="birth_date">Data de Nascimento</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="date_birth"
-                    v-model="date_birth"
+                    id="birth_date"
+                    v-model="birth_date"
                     v-maska="'##/##/####'"
                   />
                 </div>
               </div>
 
-              <div class="form-row">
+              <div class="row">
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="gender">Sexo</label>
-                  <select class="form-control" id="gender" v-model="gender">
-                    <option disabled value="">Selecione uma opção...</option>
-                    <option value="0">Masculino</option>
-                    <option value="1">Feminino</option>
-                    <option value="2">Indefinido</option>
-                  </select>
+                  <label for="email">E-Mail</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    v-model="email"
+                  />
                 </div>
 
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -58,7 +58,94 @@
                   />
                 </div>
               </div>
+              <hr>
+              <!-- origin_adress  -->
+              <h3>Endereço de retirada</h3>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="origin_adress_street">Rua</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="origin_adress_street"
+                    v-model="origin_adress_street"
+                  />
+                </div>
 
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="origin_adress_number">Numero</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="origin_adress_number"
+                    v-model="origin_adress_number"
+                  />
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="origin_adress_city">Cidade</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="origin_adress_city"
+                    v-model="origin_adress_city"
+                  />
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="origin_adress_state">Estado</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="origin_adress_state"
+                    v-model="origin_adress_state"
+                  />
+                </div>
+              </div>
+              <hr>
+              <!-- destination_adress  -->
+              <h3>Endereço de entrega</h3>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="destination_adress_street">Rua</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="destination_adress_street"
+                    v-model="destination_adress_street"
+                  />
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="destination_adress_number">Numero</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="destination_adress_number"
+                    v-model="destination_adress_number"
+                  />
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="destination_adress_city">Cidade</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="destination_adress_city"
+                    v-model="destination_adress_city"
+                  />
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="destination_adress_state">Estado</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="destination_adress_state"
+                    v-model="destination_adress_state"
+                  />
+                </div>
+              </div>
               <button
                 type="submit"
                 v-on:click="validateForm"
@@ -76,19 +163,27 @@
 
 <script>
 import { maska } from "maska";
-import UserService from '../../domain/user/UserService.js';
-import ExameService from '../../domain/exame/ExameService.js';
+// import UserService from '../../domain/user/UserService.js';
+import OrderService from '../../domain/order/OrderService.js';
 
 export default {
   directives: { maska },
   data() {
     return {
       name: "",
-      date_birth: "",
-      gender: "",
+      birth_date: "",
+      email: "",
       individual_registration: "",
       alert: "form-control",
       required_message: false,
+      destination_adress_street:"",
+      destination_adress_number:"",
+      destination_adress_city:"",
+      destination_adress_state:"",
+      origin_adress_street:"",
+      origin_adress_number:"",
+      origin_adress_city:"",
+      origin_adress_state:""
     };
   },
   methods: {
@@ -104,35 +199,57 @@ export default {
       this.required_message = false;
     },
     store: async function () {
-      let store = new Request();
-      let url = "/student";
+      let order_service  = new OrderService(this.$http);
       let data = {
-        name: this.name,
-        date_birth: moment(this.date_birth, "DD/MM/YYYY").format("YYYY-MM-DD"),
-        gender: this.gender,
-        individual_registration: this.individual_registration.replace(/\D/g, ""),
+        customer: {
+          name: this.name,
+          birth_date: moment(this.birth_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
+          email: this.email,
+          individual_registration: this.individual_registration.replace(/\D/g, ""),
+        },
+        origin_adress: {
+            street: this.origin_adress_street,
+            number: this.origin_adress_number,
+            city: this.origin_adress_city,
+            state: this.origin_adress_state,
+            country: "BR",
+            active: true
+        },
+        destination_adress: {
+            street: this.destination_adress_street,
+            number: this.destination_adress_number,
+            city: this.destination_adress_city,
+            state: this.destination_adress_state,
+            country: "BR",
+            active: true
+        },
+        supplier: {
+            name: "Boa Entrega",
+            email: "contato@boaentrega.com.br"
+        },
+        unity: "UND",
+        weight: 10,
+        height: 20,
+        width: 30,
+        length: 10
       };
-      let response = await store.customRquest(
-        url,
-        data,
-        "POST",
-        this.$csrf_token
-      );
-      response.status == "success"
+      console.log("enviando dados de order");
+      let response = await order_service.store(data);
+      console.debug(response);
+      response.success == true
         ? this.clearForm(response.message)
         : this.errorSubmit();
     },
     clearForm: function (message) {
       this.name = "";
-      this.date_birth = "";
-      this.gender = "";
+      this.birth_date = "";
+      this.email = "";
       this.individual_registration = "";
-      this.$swal({
+      this.$swal.fire({
         position: "center",
         icon: "success",
         title: message,
-        showConfirmButton: false,
-        timer: 3000,
+        showConfirmButton: true
       });
     },
     errorSubmit: function () {
@@ -150,13 +267,8 @@ export default {
 		console.debug(this.$route.params.id);		
 		console.debug(this.$props);	
 
-        // Or with jQuery
-        //M.toast({html: 'I am a toast!'})
-
-
-
-        this.user_service  = new UserService(this.$http);
-        this.exame_service  = new ExameService(this.$http);
+      // this.user_service  = new UserService(this.$http);
+      
   }
 };
 </script>

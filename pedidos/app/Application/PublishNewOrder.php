@@ -6,6 +6,7 @@ use App\Application\Interfaces\IPublishNewOrder;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 use PhpAmqpLib\Wire\AMQPTable;
 
 class PublishNewOrder implements IPublishNewOrder 
@@ -13,7 +14,8 @@ class PublishNewOrder implements IPublishNewOrder
 
     public function send(Order $order)
     {
- 
+        Log::channel('pedidos')->info("enviando mensagem para o rabbit");
+
         $exchange = env('RABBITMQ_EXCHANGE');
               
         $connection = new AMQPStreamConnection(

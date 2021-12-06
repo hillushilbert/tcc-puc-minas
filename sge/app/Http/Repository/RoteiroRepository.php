@@ -1,21 +1,23 @@
 <?php 
 
-namespace App\Application;
+namespace App\Http\Repository;
 
+use App\Application\Dfs;
+use App\Application\Factory;
+use App\Http\Interfaces\IRoteiroRepository;
 use App\Models\CentroDistribuicao;
 use App\Models\Entrega;
 use App\Models\Roteiro;
 
-class Roteirizacao 
+class RoteiroRepository implements IRoteiroRepository
 {
     public function __construct()
     {
         
     }
 
-    public function make(Entrega $entrega)
+    public function create(Entrega $entrega)
     {
-        $entrega->save();
         
         $factory = new  Factory();
         $factory->run();
@@ -24,13 +26,10 @@ class Roteirizacao
         $pe = $factory->getInstance($entrega->dados_pedido['destination_adress']['state']);
         $dfs = new Dfs();
         $dfs->execute($sp,$pe,$rotas);
-        // $menosParadas = $dfs->menosParadas($rotas);
-        // dump($menosParadas);    
-        
+          
         $menorDistancia = $dfs->menorDistancia($rotas,$factory);
         $rota = $menorDistancia['rota_array'];
         $distanciaTotal =   $menorDistancia['distancia'];
-
 
         $anterior = Roteiro::create([
             'entrega_id' => $entrega->id,
@@ -39,6 +38,9 @@ class Roteirizacao
             'de' => 'Retirada : '.$entrega->dados_pedido['origin_adress']['street'],
             'para' => '',
         ]);
+
+        $entrega->update(['rota_atual_id'=>$anterior->id]);
+
 
         for($i=0;$i<count($rota);$i++)
         {
@@ -69,7 +71,7 @@ class Roteirizacao
             
         }
 
-        $final = Roteiro::create([
+        Roteiro::create([
             'entrega_id' => $entrega->id,
             'roteiro_anterior_id' => $atual->id,
             'roteiro_proximo_id' => null,

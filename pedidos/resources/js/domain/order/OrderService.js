@@ -1,42 +1,32 @@
 
-export default class ExameService {
+export default class OrderService {
 
     constructor(resource) {
 
         this._resource = resource;
-
-
-        if(localStorage.getItem('user') === null || localStorage.getItem('user').length == 0)
-        {
-            window.location = '/app/login';  
-        }
                 
         this.user = JSON.parse(localStorage.getItem('user'));
 
         // mata sessão, caso nao tenha o campo api_token
-        if(this.user.api_token == undefined){
-            window.location = '/app/logout';
-        }
+        if(this.user == null || this.user.api_token == undefined){
+            console.log("sem api_token");
+            this._headers = {};
+        }else{
+            this._headers = {
+                headers: {
+                    'Authorization' :"Bearer "+this.user.api_token
+                }
+            }            
+        } 
 
-        this._headers = {
-            headers: {
-                'Authorization' :"Bearer "+this.user.api_token
-            }
-        }        
     }
 
-	iniciar(record){
+	async store(record){
         //let url = this.$props.save_url;
-        let url = '/api/exame';
+        let url = '/api/orders';
         //var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
-        return this._resource.post(url,{
-            //_token: csrf_token,
-            // _method: 'PATCH',
-            id_teste: record.id_teste,
-            id_user: record.id_user,
-            tipo_exame: record.tipo_exame
-        },
+        return await this._resource.post(url,record,
         this._headers)
         .then(
             res => {
@@ -146,7 +136,7 @@ export default class ExameService {
      * retorn promisse com comunicação para retorno de uma colecao
      * @param {*} id_colecao 
      */
-     async treinando(id_quizz) {
+    async treinando(id_quizz) {
         return await this._resource.get('/api/exame?treinando='+id_quizz,this._headers)
         .then(res => res.json());
     }    

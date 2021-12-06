@@ -2,14 +2,14 @@
 
 namespace App\Application;
 
-
+use App\Application\Interfaces\IPublishNewOrder;
 use App\Application\Interfaces\IStoreOrder;
 use App\Http\Interfaces\IAdressRepository;
 use App\Http\Interfaces\ICustomerRepository;
 use App\Http\Interfaces\IOrderRepository;
 use App\Http\Interfaces\ISupplierRepository;
-use App\Http\Interfaces\IPublishNewOrder;
 use App\Http\Requests\StoreOrderRequest;
+use Illuminate\Support\Facades\Log;
 
 class StoreOrder implements IStoreOrder
 {
@@ -31,6 +31,7 @@ class StoreOrder implements IStoreOrder
 
     public function execute(StoreOrderRequest $request)
     {
+        Log::channel('pedidos')->info("Enviando novo pedido");
         $order = $this->orderRepository->factory($request->all());
         // pesquisa pelo endereco origem
         $adressOrigin = $this->adressRepository->findByStreetAndNumber($request->origin_adress['street'],$request->origin_adress['number']);
@@ -77,7 +78,8 @@ class StoreOrder implements IStoreOrder
 
         // publica nova order
         $this->publishNewOrder->send($order);
-        
+        Log::channel('pedidos')->info("enviado com sucesso");
+
         return $order; // remover
     }
 }

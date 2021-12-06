@@ -39,6 +39,7 @@ class LogstashLogTestCommand extends Command
     public function handle()
     {
         Log::channel('pedidos')->info("Teste logstash");
+        
         return Command::SUCCESS;
     }
 }
