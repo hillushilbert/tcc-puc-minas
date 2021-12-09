@@ -1,130 +1,137 @@
 <template>
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Lista de Alunos</div>
-          <div class="card-body">
-            <a href="/order/create" class="btn btn-primary mb-5"
-              ><i class="fas fa-plus"></i> Cadastrar Aluno</a
-            >
-            <div class="container" id="">
-              <div class="filter input-group mb-3">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Filtrar pelo nome..."
-                  v-model="filter_name"
-                />
-              </div>
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nome</th>
-                      <th>Data de Nascimento</th>
-                      <th>Sexo</th>
-                      <th>CPF</th>
-                      <th>Relatório</th>
-                      <th>Editar</th>
-                      <th>Excluir</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="(r, index) in filteredRows.slice(
-                        pageStart,
-                        pageStart + countOfPage
-                      )"
+  <div>
+    <boa-menu id="menu"/>
+    <div class="container-fluid">
+      <div class="row justify-content-center  py-4">
+        <div class="col-md-8 col-lg-12">
+          <div class="card ">
+            <div class="card-header">Lista de Pedidos</div>
+            <div class="card-body">
+            <router-link :to="{name:'order-create'}"class="btn btn-primary mb-5">
+                <i class="fas fa-plus"></i> Novo Pedido</a>
+            </router-link>
+              <div class="container" id="">
+                <div class="filter input-group mb-3">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Filtrar pelo nome..."
+                    v-model="filter_name"
+                  />
+                </div>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Data Criação</th>
+                        <!-- <th>E-Mail</th> -->
+                        <th>De</th>
+                        <th>Para</th>
+                        <th>CPF</th>
+                        <th>Relatório</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(r, index) in filteredRows.slice(
+                          pageStart,
+                          pageStart + countOfPage
+                        )"
+                      >
+                        <th>{{ (currPage - 1) * countOfPage + index + 1 }}</th>
+                        <td>{{ r.customer.name }}<br>
+                            <span class="font-italic">{{ r.customer.email }}</span></td>
+                        <td>{{ changeDate(r.created_at) }}</td>
+                        <!-- <td>{{ r.customer.email }}</td> -->
+                        <td>{{ changeAddress(r.origin) }}</td>
+                        <td>{{ changeAddress(r.destiny) }}</td>
+                        <td>--</td>
+                        <td>
+                          <a class="pointer" v-on:click="exportPDF(r.id,r.name)"
+                            ><i class="fas fa-eye"></i
+                          ></a>
+                        </td>
+                        <td>
+                          <a class="pointer" :href="'/student/edit/' + r.id"
+                            ><i class="fas fa-pencil-alt"></i
+                          ></a>
+                        </td>
+                        <td>
+                          <a class="pointer" v-on:click="deleteStudent(r.id)"
+                            ><i class="fas fa-trash-alt"></i
+                          ></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li
+                      class="page-item"
+                      v-bind:class="{ disabled: currPage === 1 }"
+                      @click.prevent="setPage(currPage - 1)"
                     >
-                      <th>{{ (currPage - 1) * countOfPage + index + 1 }}</th>
-                      <td>{{ r.name }}</td>
-                      <td>{{ changeDate(r.date_birth) }}</td>
-                      <td>
-                        {{
-                          r.gender == 0
-                            ? "Masculino"
-                            : r.gender == 1
-                            ? "Feminino"
-                            : "Indefinido"
-                        }}
-                      </td>
-                      <td>{{ changeCpf(r.individual_registration) }}</td>
-                      <td>
-                        <a class="pointer" v-on:click="exportPDF(r.id,r.name)"
-                          ><i class="fas fa-eye"></i
-                        ></a>
-                      </td>
-                      <td>
-                        <a class="pointer" :href="'/student/edit/' + r.id"
-                          ><i class="fas fa-pencil-alt"></i
-                        ></a>
-                      </td>
-                      <td>
-                        <a class="pointer" v-on:click="deleteStudent(r.id)"
-                          ><i class="fas fa-trash-alt"></i
-                        ></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      <a class="page-link" href="">Anterior</a>
+                    </li>
+                    <li
+                      class="page-item"
+                      v-for="n in totalPage"
+                      v-bind:class="{ active: currPage === n }"
+                      @click.prevent="setPage(n)"
+                    >
+                      <a class="page-link" href="">{{ n }}</a>
+                    </li>
+                    <li
+                      class="page-item"
+                      v-bind:class="{ disabled: currPage === totalPage }"
+                      @click.prevent="setPage(currPage + 1)"
+                    >
+                      <a class="page-link" href="">Próxima</a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
-              <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li
-                    class="page-item"
-                    v-bind:class="{ disabled: currPage === 1 }"
-                    @click.prevent="setPage(currPage - 1)"
-                  >
-                    <a class="page-link" href="">Anterior</a>
-                  </li>
-                  <li
-                    class="page-item"
-                    v-for="n in totalPage"
-                    v-bind:class="{ active: currPage === n }"
-                    @click.prevent="setPage(n)"
-                  >
-                    <a class="page-link" href="">{{ n }}</a>
-                  </li>
-                  <li
-                    class="page-item"
-                    v-bind:class="{ disabled: currPage === totalPage }"
-                    @click.prevent="setPage(currPage + 1)"
-                  >
-                    <a class="page-link" href="">Próxima</a>
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
+        <div class="col-md-8"></div>
       </div>
-      <div class="col-md-8"></div>
     </div>
   </div>
 </template>
 
 <script>
+import BoaMenu from './../menu/Menu.vue';
 import { maska } from "maska";
+import OrderService from '../../domain/order/OrderService.js';
 export default {
   directives: { maska },
-  props: ["orders"],
   data() {
     return {
-      rows: this.orders,
+      rows: [],
       countOfPage: 5,
       currPage: 1,
       filter_name: "",
       report: null,
     };
   },
+  components: {
+		'boa-menu': BoaMenu
+	},
   computed: {
     filteredRows: function () {
       var filter_name = this.filter_name.toLowerCase();
       return this.filter_name.trim() !== ""
         ? this.rows.filter(function (d) {
-            return d.name.toLowerCase().indexOf(filter_name) > -1;
+            return (d.customer.name.toLowerCase().indexOf(filter_name) > -1
+              || d.destiny.city.toLowerCase().indexOf(filter_name) > -1
+              || d.origin.city.toLowerCase().indexOf(filter_name) > -1
+            );
           })
         : this.rows;
     },
@@ -153,6 +160,9 @@ export default {
         6,
         9
       )}-${cpf.substring(9, 12)}`;
+    },
+    changeAddress: function(address){
+      return `${address.street}, ${address.number} - ${address.city} / ${address.state}`;
     },
     deleteStudent: async function (id) {
       let del = new Request();
@@ -188,7 +198,19 @@ export default {
         });
       }
     },
+    list: async function () {
+      let order_service  = new OrderService(this.$http);
+      
+      console.log("enviando dados de order");
+      let response = await order_service.index();
+      console.debug(response);
+      this.rows = response;
+    },
   },
+  created() {
+    console.log("created");
+    this.list();
+  }
 };
 </script>
 

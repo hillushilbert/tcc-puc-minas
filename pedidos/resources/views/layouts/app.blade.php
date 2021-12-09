@@ -26,8 +26,8 @@
 </head>
 
 <body>
-    <div>
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <!-- <div> -->
+        <!-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Boa Entrega - Pedidos
@@ -37,14 +37,11 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Pedidos
@@ -69,14 +66,14 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> -->
 
-        <main class="py-4">
+        <!-- <main> -->
             <div id="app">
             @yield('content')
             </div>
-        </main>
-    </div>
+        <!-- </main> -->
+    <!-- </div> -->
 </body>
 
 </html>

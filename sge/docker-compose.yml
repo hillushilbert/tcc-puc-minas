@@ -4,7 +4,7 @@ version: "3.6"
 # services declaration.
 services:
   # Web Application
-  app:
+  sge:
     build:
       args:
         user: appsge

@@ -27,12 +27,10 @@ class NewOrderRequest extends FormRequest
             //
             'customer' => 'required',
             'customer.name' => 'required|max:255',
-            'origin_adress' => 'required',
-            'origin_adress.number' => 'required|int',
-            'destination_adress' => 'required',
-            'destination_adress.number' => 'required|int',
-            'supplier' => 'required',
-            'supplier.name' => 'required|max:255',
+            'origin' => 'required',
+            'origin.number' => 'required|int',
+            'destiny' => 'required',
+            'destiny.number' => 'required|int',
             'unity' => 'required:max:100',
         ];
     }

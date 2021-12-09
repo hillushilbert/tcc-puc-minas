@@ -22,8 +22,8 @@ class RoteiroRepository implements IRoteiroRepository
         $factory = new  Factory();
         $factory->run();
         //--
-        $sp = $factory->getInstance($entrega->dados_pedido['origin_adress']['state']);
-        $pe = $factory->getInstance($entrega->dados_pedido['destination_adress']['state']);
+        $sp = $factory->getInstance($entrega->dados_pedido['origin']['state']);
+        $pe = $factory->getInstance($entrega->dados_pedido['destiny']['state']);
         $dfs = new Dfs();
         $dfs->execute($sp,$pe,$rotas);
           
@@ -35,7 +35,7 @@ class RoteiroRepository implements IRoteiroRepository
             'entrega_id' => $entrega->id,
             'roteiro_anterior_id' => null,
             'roteiro_proximo_id' => null,
-            'de' => 'Retirada : '.$entrega->dados_pedido['origin_adress']['street'],
+            'de' => 'Retirada : '.$entrega->dados_pedido['origin']['street'],
             'para' => '',
         ]);
 
@@ -77,7 +77,7 @@ class RoteiroRepository implements IRoteiroRepository
             'roteiro_proximo_id' => null,
             'de' => $cd_para->name,
             'de_cd_id' => $cd_para->id,
-            'para' => 'Entrega : '.$entrega->dados_pedido['destination_adress']['street'],
+            'para' => 'Entrega : '.$entrega->dados_pedido['destiny']['street'],
         ]);
 
     }

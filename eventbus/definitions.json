@@ -1,0 +1,99 @@
+{
+    "bindings": [{
+            "arguments": {},
+            "destination": "boaentrega.pedidos.novo",
+            "destination_type": "queue",
+            "routing_key": "boaentrega.pedidos.novo",
+            "source": "novo_pedido",
+            "vhost": "boaentrega.pedidos"
+        }
+    ],
+    "exchanges": [{
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "name": "novo_pedido",
+            "type": "direct",
+            "vhost": "boaentrega.pedidos"
+        }
+    ],
+    "global_parameters": [],
+    "parameters": [],
+    "permissions": [{
+            "configure": ".*",
+            "read": ".*",
+            "user": "app_pedido",
+            "vhost": "boaentrega.pedidos",
+            "write": ".*"
+        }, {
+            "configure": ".*",
+            "read": ".*",
+            "user": "guest",
+            "vhost": "/",
+            "write": ".*"
+        }, {
+            "configure": ".*",
+            "read": ".*",
+            "user": "app_despacho",
+            "vhost": "boaentrega.pedidos",
+            "write": ".*"
+        }, {
+            "configure": ".*",
+            "read": ".*",
+            "user": "guest",
+            "vhost": "boaentrega.pedidos",
+            "write": ".*"
+        }
+    ],
+    "policies": [],
+    "queues": [{
+            "arguments": {
+                "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "name": "boaentrega.pedidos.novo",
+            "type": "classic",
+            "vhost": "boaentrega.pedidos"
+        }
+    ],
+    "rabbit_version": "3.8.19",
+    "rabbitmq_version": "3.8.19",
+    "topic_permissions": [],
+    "users": [{
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "limits": {},
+            "name": "guest",
+            "password_hash": "PqT9CtmruVmnWmdJcU03kCzIRxini+TY2KK8nHp1rZOAZ3j9",
+            "tags": "administrator"
+        }, {
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "limits": {},
+            "name": "app_despacho",
+            "password_hash": "LKp99FKrJL4YoTAxodBeqLk3NMrWq6CYZP3M6FMwWcLWqB9e",
+            "tags": "administrator"
+        }, {
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "limits": {},
+            "name": "app_pedido",
+            "password_hash": "uBHElhZeRIqbKA07k8Sgj13eR8kkelo8ha/bgWPb4JGRDUQL",
+            "tags": "administrator"
+        }
+    ],
+    "vhosts": [{
+            "limits": [],
+            "metadata": {
+                "description": "Default virtual host",
+                "tags": []
+            },
+            "name": "/"
+        }, {
+            "limits": [],
+            "metadata": {
+                "description": "",
+                "tags": []
+            },
+            "name": "boaentrega.pedidos"
+        }
+    ]
+}

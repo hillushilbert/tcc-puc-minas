@@ -1,159 +1,162 @@
 <template>
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Novo Pedido</div>
-          <div class="card-body">
-            <a href="/student" class="btn btn-primary mb-3"
-              ><i class="fas fa-arrow-left"></i> Voltar</a
-            >
-            <form v-on:submit.prevent>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="name">Nome</label>
-                  <input
-                    type="text"
-                    :class="alert"
-                    id="name"
-                    v-model="name"
-                    v-on:keyup="clearAlertRequire"
-                  />
-                  <small v-if="required_message" class="text-danger"
-                    >Este campo é obrigatório.</small
-                  >
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="birth_date">Data de Nascimento</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="birth_date"
-                    v-model="birth_date"
-                    v-maska="'##/##/####'"
-                  />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="email">E-Mail</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    v-model="email"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="individual_registration">CPF</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="individual_registration"
-                    v-model="individual_registration"
-                    v-maska="'###.###.###-##'"
-                  />
-                </div>
-              </div>
-              <hr>
-              <!-- origin_adress  -->
-              <h3>Endereço de retirada</h3>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="origin_adress_street">Rua</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="origin_adress_street"
-                    v-model="origin_adress_street"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="origin_adress_number">Numero</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="origin_adress_number"
-                    v-model="origin_adress_number"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="origin_adress_city">Cidade</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="origin_adress_city"
-                    v-model="origin_adress_city"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="origin_adress_state">Estado</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="origin_adress_state"
-                    v-model="origin_adress_state"
-                  />
-                </div>
-              </div>
-              <hr>
-              <!-- destination_adress  -->
-              <h3>Endereço de entrega</h3>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="destination_adress_street">Rua</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="destination_adress_street"
-                    v-model="destination_adress_street"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="destination_adress_number">Numero</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="destination_adress_number"
-                    v-model="destination_adress_number"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="destination_adress_city">Cidade</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="destination_adress_city"
-                    v-model="destination_adress_city"
-                  />
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                  <label for="destination_adress_state">Estado</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="destination_adress_state"
-                    v-model="destination_adress_state"
-                  />
-                </div>
-              </div>
-              <button
-                type="submit"
-                v-on:click="validateForm"
-                class="btn btn-primary mt-3"
+  <div>
+    <boa-menu id="menu"/>
+    <div class="container-fluid">
+      <div class="row justify-content-center  py-4">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">Novo Pedido</div>
+            <div class="card-body">
+              <a href="/student" class="btn btn-primary mb-3"
+                ><i class="fas fa-arrow-left"></i> Voltar</a
               >
-                Enviar
-              </button>
-            </form>
+              <form v-on:submit.prevent>
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="name">Nome</label>
+                    <input
+                      type="text"
+                      :class="alert"
+                      id="name"
+                      v-model="name"
+                      v-on:keyup="clearAlertRequire"
+                    />
+                    <small v-if="required_message" class="text-danger"
+                      >Este campo é obrigatório.</small
+                    >
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="birth_date">Data de Nascimento</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="birth_date"
+                      v-model="birth_date"
+                      v-maska="'##/##/####'"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="email">E-Mail</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      v-model="email"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="individual_registration">CPF</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="individual_registration"
+                      v-model="individual_registration"
+                      v-maska="'###.###.###-##'"
+                    />
+                  </div>
+                </div>
+                <hr>
+                <!-- origin_adress  -->
+                <h3>Endereço de retirada</h3>
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="origin_adress_street">Rua</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="origin_adress_street"
+                      v-model="origin_adress_street"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="origin_adress_number">Numero</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="origin_adress_number"
+                      v-model="origin_adress_number"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="origin_adress_city">Cidade</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="origin_adress_city"
+                      v-model="origin_adress_city"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="origin_adress_state">Estado</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="origin_adress_state"
+                      v-model="origin_adress_state"
+                    />
+                  </div>
+                </div>
+                <hr>
+                <!-- destination_adress  -->
+                <h3>Endereço de entrega</h3>
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="destination_adress_street">Rua</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="destination_adress_street"
+                      v-model="destination_adress_street"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="destination_adress_number">Numero</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="destination_adress_number"
+                      v-model="destination_adress_number"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="destination_adress_city">Cidade</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="destination_adress_city"
+                      v-model="destination_adress_city"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="destination_adress_state">Estado</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="destination_adress_state"
+                      v-model="destination_adress_state"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  v-on:click="validateForm"
+                  class="btn btn-primary mt-3"
+                >
+                  Enviar
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -165,6 +168,7 @@
 import { maska } from "maska";
 // import UserService from '../../domain/user/UserService.js';
 import OrderService from '../../domain/order/OrderService.js';
+import BoaMenu from './../menu/Menu.vue';
 
 export default {
   directives: { maska },
@@ -186,6 +190,9 @@ export default {
       origin_adress_state:""
     };
   },
+  components: {
+		'boa-menu': BoaMenu
+	},
   methods: {
     validateForm: function () {
       this.name == "" ? this.alertRequire() : this.store();
@@ -245,11 +252,19 @@ export default {
       this.birth_date = "";
       this.email = "";
       this.individual_registration = "";
+
       this.$swal.fire({
-        position: "center",
-        icon: "success",
-        title: message,
-        showConfirmButton: true
+        title: 'Pedido Incluido',
+        text: "Seu pedido foi incluido e logo será processado",
+        icon: 'success',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        // if (result.value) {
+        //   window.location = '/login';
+        // }
       });
     },
     errorSubmit: function () {

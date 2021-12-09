@@ -23,9 +23,15 @@ services:
     networks:
       - pucminas
     volumes:
-     - ./data:/var/lib/rabbitmq
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./definitions.json:/etc/rabbitmq/definitions.json
+      # - ./definitions2.json:/etc/rabbitmq/definitions.json
+      - rabbitmq:/var/lib/rabbitmq
     # depends_on:
     #   - web
   #App  
-
+volumes:
+  rabbitmq:
+    driver: local
  

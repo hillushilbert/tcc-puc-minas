@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\DTO\OrderDTO;
 use App\Factory\AMQPFactory;
 use Exception;
 use Illuminate\Console\Command;
@@ -62,15 +63,31 @@ class DespachoCommand extends Command
             try
             {
                 Log::info(' [x] Received '. $msg->body);
+                $orderDTO = new OrderDTO($msg->body);
+                $order = $orderDTO->transformDataToOrder();
+                $url = env('API_SGE').'/api/entrega';
+                Log::info("Enviando dados para SGE : ".$url);
+                Log::debug($orderDTO->toArray());
                 // $payload->execute_selenium = false;
-                $response = Http::post('http://sge.boaentrega.com.br/api/entrega', $msg->body);
+                $response = Http::withHeaders([
+                                        'accept' => 'application/json',
+                                        'content-Type' => 'application/json'
+                                    ])
+                                    ->post($url,$orderDTO->toArray());
+                
                 if($response->status() == 201){
-                    $msg->ack();
-                    $codigo_rastreamento = $response()->json()->data->codigo_rastreamento;
-                                      
+                    Log::debug($response->json());
+                    $codigo_rastreamento = $response->json()['data']['codigo_rastreamento'];
+                    Log::info("Codigo de Rastreamento : ".$codigo_rastreamento );
+                    $customer = $orderDTO->transformDataToCustomer();
+                    $customer->sendOrderShippedNotification($order,$codigo_rastreamento);
+                    
+                    // gravar na fila de pedidos despachados o codigo_rastreamento e o numero do pedido
+
                 }else{
                     throw new Exception($response->body());
                 }
+                $msg->ack();
                 Log::info(" [x] Done");
             }
             catch(\Exception $e)

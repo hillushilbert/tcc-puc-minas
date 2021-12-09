@@ -6,7 +6,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 abstract class AMQPFactory 
 {
-    public static function getConnection()
+    public static function getConnection() : AMQPStreamConnection
     {
         $connection = new AMQPStreamConnection(
             env('RABBITMQ_HOST','rabbit'), 

@@ -114,32 +114,10 @@ export default class OrderService {
      * retorn promisse com comunicação para retorno de uma colecao
      * @param {*} id_colecao 
      */
-    index(id_colecao) {
-        // return this._resource.get('/api/colecao/'+id_colecao+'/estudo')
-        // .then(res => res.json());
-    }
-
-    /**
-     * index
-     * 
-     * retorn promisse com comunicação para retorno de uma colecao
-     * @param {*} id_colecao 
-     */
-    async quizz(id_quizz) {
-        return await this._resource.get('/api/exame?quizz='+id_quizz,this._headers)
+    index() {
+        return this._resource.get('/api/orders')
         .then(res => res.json());
     }
-
-    /**
-     * index
-     * 
-     * retorn promisse com comunicação para retorno de uma colecao
-     * @param {*} id_colecao 
-     */
-    async treinando(id_quizz) {
-        return await this._resource.get('/api/exame?treinando='+id_quizz,this._headers)
-        .then(res => res.json());
-    }    
 
 
     /**
@@ -148,11 +126,11 @@ export default class OrderService {
      * retorn promisse com comunicação para retorno de uma colecao
      * @param {*} id_colecao 
      */    
-    show(id) {
+     async show(id) {
 
-        let url = '/api/exame/'+id;
+        let url = '/api/orders/'+id;
         
-        return this._resource.get(url,this._headers)
+        return await this._resource.get(url,this._headers)
             .then(
                 res => res.json(),
                 err => {

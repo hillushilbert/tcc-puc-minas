@@ -23,8 +23,8 @@ import OrderListComponent from './components/order/OrderListComponent.vue';
 
 export const routes = [
     /* rotas aqui */
-    {path:'/app', component: Home, title: "Home"},
-    {path:'/app/login', component: Login, title: "Login"},
+    {path:'/app', component: Home, title: "Home", name:'home'},
+    {path:'/app/login', component: Login, title: "Login", name:'login'},
     {path:'/app/order/create',  name:'order-create', component: OrderCreateComponent, title: "OrderCreateComponent"},
     {path:'/app/order/list',  name:'order-list', component: OrderListComponent, title: "OrderListComponent"}, /* falta implementar */
     {path:'/app/order/edit/:id',  name:'order-edit', component: OrderEditComponent, title: "OrderEditComponent", props: true}, /* falta implementar */
