@@ -12,8 +12,6 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: hillushilbert/app-pedidos:latest
-    # volumes:
-    #   - .:/var/www/
     container_name: pedidos-app
     restart: unless-stopped
     working_dir: /var/www/
@@ -24,6 +22,21 @@ services:
     command: bash -c "composer install && php artisan serve --host=0.0.0.0 --port=8010"
     ports:
       - 8010:8010
+
+  roteamento:
+    image: hillushilbert/app-pedidos:latest
+    container_name: pedidos-roteamento
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - .:/var/www
+    networks:
+      - pucminas
+    command: 
+     - php 
+     - artisan
+     - command:roteamento
+
 
 networks:
   pucminas:

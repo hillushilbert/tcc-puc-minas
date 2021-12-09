@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Application\InformarRoteamentoPedido;
 use App\DTO\OrderDTO;
 use App\Factory\AMQPFactory;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use PhpAmqpLib\Wire\AMQPTable;
 
 class DespachoCommand extends Command
 {
@@ -67,7 +67,6 @@ class DespachoCommand extends Command
                 $order = $orderDTO->transformDataToOrder();
                 $url = env('API_SGE').'/api/entrega';
                 Log::info("Enviando dados para SGE : ".$url);
-                Log::debug($orderDTO->toArray());
                 // $payload->execute_selenium = false;
                 $response = Http::withHeaders([
                                         'accept' => 'application/json',
@@ -75,16 +74,22 @@ class DespachoCommand extends Command
                                     ])
                                     ->post($url,$orderDTO->toArray());
                 
-                if($response->status() == 201){
-                    Log::debug($response->json());
+                if($response->status() == 201)
+                {
                     $codigo_rastreamento = $response->json()['data']['codigo_rastreamento'];
                     Log::info("Codigo de Rastreamento : ".$codigo_rastreamento );
                     $customer = $orderDTO->transformDataToCustomer();
+                    
+                    // envia email de notificação
                     $customer->sendOrderShippedNotification($order,$codigo_rastreamento);
                     
                     // gravar na fila de pedidos despachados o codigo_rastreamento e o numero do pedido
+                    $informarRoteamentoPedido = new InformarRoteamentoPedido();
+                    $informarRoteamentoPedido->send($order->id,$codigo_rastreamento);
 
-                }else{
+                }
+                else
+                {
                     throw new Exception($response->body());
                 }
                 $msg->ack();

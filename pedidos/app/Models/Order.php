@@ -20,7 +20,10 @@ class Order extends Model {
         'height',
         'width',
         'length',
+        'codigo_rastreamento',
     ];
+
+    protected $appends = ['roteamento'];
 
     public function customer()
     {
@@ -40,6 +43,16 @@ class Order extends Model {
     public function destiny()
     {
         return $this->belongsTo('App\Models\Adress','destination_adress_id','id');
+    }
+
+    public function setRoteamentoAttribute($value)
+    {
+        $this->attributes['roteamento'] = $value;
+    }
+
+    public function getRoteamentoAttribute()
+    {
+        return $this->attributes['roteamento'] ?? null;
     }
 
     public function exportToJson()

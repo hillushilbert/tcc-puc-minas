@@ -114,7 +114,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
-        'pedidos' => [
+        'logstash' => [
             'driver' => 'custom',
             'via'    => \App\LogstashLogger::class,
             'host'   => env('LOGSTASH_HOST', '127.0.0.1'),

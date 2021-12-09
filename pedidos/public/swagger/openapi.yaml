@@ -365,6 +365,8 @@ components:
             birth_date:
               type: string
               format: date-time
+            cpf:
+              type: string
           type: object
     Adress:
       type: object
@@ -375,12 +377,17 @@ components:
           required:
             - name
           properties:
+            zipcode:
+              type: integer
+              format: int64
             street:
               type: string
             number:
               type: integer
               format: int64
             city:
+              type: string
+            neighborhood:
               type: string
             state:
               type: string
@@ -414,7 +421,10 @@ components:
         -
           required:
             - customer
+            - origin_adress
           properties:
+            codigo_rastreamento:
+              type: string
             customer:
               $ref: '#/components/schemas/Customer'
             origin_adress:

@@ -1,0 +1,9 @@
+https://github.com/robsontenorio/laravel-keycloak-guard
+
+https://github.com/jerneyio/kong-keycloak-mobile-demo/blob/master/docker-compose.yml
+
+https://www.jerney.io/secure-apis-kong-keycloak-1/
+
+https://blog.pythian.com/how-to-secure-your-elastic-stack-plus-kibana-logstash-and-beats/
+
+https://github.com/ARCANEDEV/LogViewer

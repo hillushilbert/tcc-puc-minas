@@ -58,5 +58,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Application\Interfaces\IPublishNewOrder',
             'App\Application\PublishNewOrder'
         );
+
+        $this->app->bind(
+            'App\Application\Interfaces\IFindOrder',
+            'App\Application\FindOrder'
+        );
     }
 }

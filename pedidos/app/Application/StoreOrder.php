@@ -31,7 +31,7 @@ class StoreOrder implements IStoreOrder
 
     public function execute(StoreOrderRequest $request)
     {
-        Log::channel('pedidos')->info("Enviando novo pedido");
+        Log::info("Enviando novo pedido");
         $order = $this->orderRepository->factory($request->all());
         // pesquisa pelo endereco origem
         $adressOrigin = $this->adressRepository->findByStreetAndNumber($request->origin_adress['street'],$request->origin_adress['number']);
@@ -39,6 +39,8 @@ class StoreOrder implements IStoreOrder
         {
             $addr = $request->origin_adress;
             $adressOrigin = $this->adressRepository->factory($addr);
+        }else{
+            $adressOrigin->zipcode = $request->origin_adress['zipcode'];
         }
         $this->adressRepository->persist($adressOrigin);
   
@@ -52,6 +54,8 @@ class StoreOrder implements IStoreOrder
         {
             $addr = $request->destination_adress;
             $adressDestiny = $this->adressRepository->factory($addr);
+        }else{
+            $adressDestiny->zipcode = $request->destination_adress['zipcode'];
         }
         $this->adressRepository->persist($adressDestiny);
 
@@ -59,9 +63,11 @@ class StoreOrder implements IStoreOrder
         if(!$customer){
             $cust = $request->customer;
             $customer = $this->customerRepository->factory($cust);
-            $this->customerRepository->persist($customer);
+        }else{
+            $customer->cpf = $request->customer['cpf'];
         }
-
+        $this->customerRepository->persist($customer);
+ 
         $supplier = $this->supplierRepository->findByEmail($request->supplier['email']);
         if(!$supplier){
             $supl = $request->supplier;
@@ -78,7 +84,7 @@ class StoreOrder implements IStoreOrder
 
         // publica nova order
         $this->publishNewOrder->send($order);
-        Log::channel('pedidos')->info("enviado com sucesso");
+        Log::info("enviado com sucesso");
 
         return $order; // remover
     }

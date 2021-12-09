@@ -21,6 +21,7 @@ class OrderDTO {
     {
         $order = new Order();
         $order->fill([
+            'id' => $this->data->id,
             'unity'	=> $this->data->unity,
             'weight'	=> $this->data->weight,
             'height'	=> $this->data->height,

@@ -14,7 +14,7 @@ class PublishNewOrder implements IPublishNewOrder
 
     public function send(Order $order)
     {
-        Log::channel('pedidos')->info("enviando mensagem para o rabbit");
+        Log::info("enviando mensagem para o rabbit");
 
         $exchange = env('RABBITMQ_EXCHANGE');
               

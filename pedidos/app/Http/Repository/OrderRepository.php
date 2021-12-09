@@ -22,9 +22,9 @@ class OrderRepository implements IOrderRepository
 
     public function find(int $id = null){
         if($id){
-            return Order::where('id',$id)->get();
+            return Order::where('id',$id)->orderBy('id','desc')->get();
         }else{
-            return Order::get();
+            return Order::orderBy('id','desc')->get();
         }
     }
 

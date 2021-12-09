@@ -27,9 +27,13 @@ class StoreOrderRequest extends FormRequest
             //
             'customer' => 'required',
             'customer.name' => 'required|max:255',
+            'customer.email' => 'required|max:255',
+            'customer.cpf' => 'required|max:11',
             'origin_adress' => 'required',
+            'origin_adress.zipcode' => 'required|max:8',
             'origin_adress.number' => 'required|int',
             'destination_adress' => 'required',
+            'destination_adress.zipcode' => 'required|max:8',
             'destination_adress.number' => 'required|int',
             'supplier' => 'required',
             'supplier.name' => 'required|max:255',

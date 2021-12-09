@@ -3,73 +3,56 @@
     <boa-menu id="menu"/>
     <div class="container-fluid">
       <div class="row justify-content-center  py-4">
-        <div class="col-md-8 col-lg-12">
+        <div class="col-md-10">
           <div class="card">
-            <div class="card-header">Editar {{ name }}</div>
+            <div class="card-header">Rastreamento {{ order.codigo_rastreamento }}</div>
             <div class="card-body">
-              <a href="/student" class="btn btn-primary mb-3"
-                ><i class="fas fa-arrow-left"></i> Voltar</a
-              >
-              <form v-on:submit.prevent>
-                <div class="form-row">
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="name">Nome</label>
-                    <input
-                      type="text"
-                      :class="alert"
-                      id="name"
-                      v-model="name"
-                      v-on:keyup="clearAlertRequire"
-                    />
-                    <small v-if="required_message" class="text-danger"
-                      >Este campo é obrigatório.</small
-                    >
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="date_birth">Data de Nascimento</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="date_birth"
-                      v-model="date_birth"
-                      v-maska="'##/##/####'"
-                    />
-                  </div>
+              <router-link :to="{ name: 'order-list' }" class="btn btn-primary mb-3">
+              
+                <i class="fas fa-arrow-left"></i> Voltar
+              </router-link> 
+              <div class="row">
+                <div class="col-md-3">
+                    <label for="cliente"><strong>Cliente:</strong> </label><br>
+                    <span id="cliente" >{{ order.customer.name }}</span>
                 </div>
-
-                <div class="form-row">
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="gender">Sexo</label>
-                    <select class="form-control" id="gender" v-model="gender">
-                      <option disabled value="">Selecione uma opção...</option>
-                      <option value="0">Masculino</option>
-                      <option value="1">Feminino</option>
-                      <option value="2">Indefinido</option>
-                    </select>
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="individual_registration">CPF</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="individual_registration"
-                      v-model="individual_registration"
-                      v-maska="'###.###.###-##'"
-                    />
-                  </div>
+                <div class="col-md-3">
+                  <label for="Origem"><strong>Origem:</strong> </label><br>
+                  <span id="Origem" >{{ order.origin.city }} / {{ order.origin.state }}</span>
                 </div>
-
-                <button
-                  type="submit"
-                  v-on:click="validateForm"
-                  class="btn btn-primary mt-3"
-                  :disabled="name == undefined ? true : false"
-                >
-                  Atualizar
-                </button>
-              </form>
+                <div class="col-md-3">
+                  <label for="Destino"><strong>Destino:</strong> </label><br>
+                  <span id="Destino" >{{ order.destiny.city }} / {{ order.destiny.state }}</span>
+                </div>
+                <div class="col-md-3">
+                  <label for="Status"><strong>Status:</strong> </label><br>
+                  <span id="Status" >{{ order.roteamento.status.name }}</span>
+                </div>
+              </div>
+              <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>De</th>
+                        <th>Para</th>
+                        <th>Iniciado</th>
+                        <th>Concluido</th>
+                        <th>Atual</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(r, index) in order.roteamento.roteiro">
+                        <th>{{ r.id }}</th>
+                        <td>{{ r.de }}</td>
+                        <td>{{ r.para}}</td>
+                        <td>{{ r.iniciado ? 'Sim':"Não"}}</td>
+                        <td>{{ r.concluido ? 'Sim':"Não"}}</td>
+                        <td>{{ r.id == order.roteamento.rota_atual_id ? 'Sim':"Não"}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
             </div>
           </div>
         </div>
@@ -79,12 +62,14 @@
 </template>
 
 <script>
-import { maska } from "maska";
+
 import BoaMenu from './../menu/Menu.vue';
+import OrderService from '../../domain/order/OrderService.js';
 
 export default {
-  directives: { maska },
-  props: ["student"],
+  props: {
+      id: { default: 0, type: Number }
+  },
   components: {
 		'boa-menu': BoaMenu
 	},
@@ -92,75 +77,51 @@ export default {
     return {
       user_id: "",
       name: "",
-      date_birth: "",
-      gender: "",
-      individual_registration: "",
-      alert: "form-control",
-      required_message: false,
+      order : {
+        codigo_rastreamento: "",
+        customer: {
+          name: ""
+        },
+        origin: {
+          city:"",
+          state:""
+        },
+        destiny: {
+          city:"",
+          state:""
+        },
+        roteamento: {
+          rota_atual_id: 0,
+          status: {
+            name: ""
+          },
+          roteiro:[]
+        }
+      }
     };
   },
   mounted() {
    
-     this.user_id = this.student.id;
-      this.name = this.student.name;
-      this.gender = this.student.gender;
-      this.date_birth = moment(this.student.date_birth, "YYYY-MM-DD").format(
-        "DD/MM/YYYY"
-      );
-      let cpf = this.student.individual_registration
-      this.individual_registration = `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6,9)}-${cpf.substring(9, 12)}`
-      
+
+  },
+  created() {
+		console.log("CREATED");
+		console.debug(this.$route.params.id);		
+		console.debug(this.$props);	
+    this.id = this.$route.params.id;
+    this.getOrder();
   },
   methods: {
     validateForm: function () {
-      this.name == "" ? this.alertRequire() : this.store();
+      this.name == "";
     },
-    alertRequire: function () {
-      this.alert = "form-control is-invalid";
-      this.required_message = true;
-    },
-    clearAlertRequire: function () {
-      this.alert = "form-control";
-      this.required_message = false;
-    },
-    store: async function () {
-      let store = new Request();
-      let url = `/student`;
-      let data = {
-        id: this.user_id,
-        name: this.name,
-        date_birth: moment(this.date_birth, "DD/MM/YYYY").format("YYYY-MM-DD"),
-        gender: this.gender,
-        individual_registration: this.individual_registration.replace(/\D/g, ""),
-      };
-      let response = await store.customRquest(
-        url,
-        data,
-        "PUT",
-        this.$csrf_token
-      );
-      response.status == "success"
-        ? this.successUpdate(response.message)
-        : this.errorUpdate();
-    },
-    successUpdate: function (message) {
-      this.$swal({
-        position: "center",
-        icon: "success",
-        title: message,
-        showConfirmButton: false,
-        timer: 3000,
-      });
-    },
-    errorUpdate: function () {
-      this.$swal({
-        position: "center",
-        icon: "error",
-        title: "O Aluno não pode ser cadastrado!",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-    },
+    getOrder: async function(){
+       console.log("getOrder");
+       let order_service  = new OrderService(this.$http);
+       let response = await order_service.show(this.id);
+       this.order = response.data;
+       console.debug(this.order);
+    }
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <boa-menu id="menu"/>
     <div class="container-fluid">
       <div class="row justify-content-center  py-4">
-        <div class="col-md-8 col-lg-12">
+        <div class="col-md-10">
           <div class="card ">
             <div class="card-header">Lista de Pedidos</div>
             <div class="card-body">
@@ -30,9 +30,8 @@
                         <th>De</th>
                         <th>Para</th>
                         <th>CPF</th>
-                        <th>Relatório</th>
+                        <th>Código Rastreio</th>
                         <th>Editar</th>
-                        <th>Excluir</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -42,7 +41,7 @@
                           pageStart + countOfPage
                         )"
                       >
-                        <th>{{ (currPage - 1) * countOfPage + index + 1 }}</th>
+                        <th>{{ r.id }}</th>
                         <td>{{ r.customer.name }}<br>
                             <span class="font-italic">{{ r.customer.email }}</span></td>
                         <td>{{ changeDate(r.created_at) }}</td>
@@ -51,19 +50,12 @@
                         <td>{{ changeAddress(r.destiny) }}</td>
                         <td>--</td>
                         <td>
-                          <a class="pointer" v-on:click="exportPDF(r.id,r.name)"
-                            ><i class="fas fa-eye"></i
-                          ></a>
+                          {{r.codigo_rastreamento}}
                         </td>
                         <td>
-                          <a class="pointer" :href="'/student/edit/' + r.id"
-                            ><i class="fas fa-pencil-alt"></i
-                          ></a>
-                        </td>
-                        <td>
-                          <a class="pointer" v-on:click="deleteStudent(r.id)"
-                            ><i class="fas fa-trash-alt"></i
-                          ></a>
+                            <router-link :to="{ name: 'order-edit', params: {id: r.id } }" class="pointer">
+                                <i class="fas fa-pencil-alt"></i>
+                            </router-link> 
                         </td>
                       </tr>
                     </tbody>

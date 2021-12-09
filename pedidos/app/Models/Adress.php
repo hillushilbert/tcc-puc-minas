@@ -17,6 +17,8 @@ class Adress extends Model {
         'state',
         'country',
         'active',
+        'zipcode',
+        'neighborhood',
     ];
 
 

@@ -3,7 +3,7 @@
     <boa-menu id="menu"/>
     <div class="container-fluid">
       <div class="row justify-content-center  py-4">
-        <div class="col-md-8">
+        <div class="col-md-10">
           <div class="card">
             <div class="card-header">Novo Pedido</div>
             <div class="card-body">
@@ -62,92 +62,10 @@
                 </div>
                 <hr>
                 <!-- origin_adress  -->
-                <h3>Endereço de retirada</h3>
-                <div class="row">
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="origin_adress_street">Rua</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="origin_adress_street"
-                      v-model="origin_adress_street"
-                    />
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="origin_adress_number">Numero</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="origin_adress_number"
-                      v-model="origin_adress_number"
-                    />
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="origin_adress_city">Cidade</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="origin_adress_city"
-                      v-model="origin_adress_city"
-                    />
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="origin_adress_state">Estado</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="origin_adress_state"
-                      v-model="origin_adress_state"
-                    />
-                  </div>
-                </div>
+                <address-component title="Endereço de retirada" @changed="onChangeOrigin"/>
                 <hr>
                 <!-- destination_adress  -->
-                <h3>Endereço de entrega</h3>
-                <div class="row">
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="destination_adress_street">Rua</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="destination_adress_street"
-                      v-model="destination_adress_street"
-                    />
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="destination_adress_number">Numero</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="destination_adress_number"
-                      v-model="destination_adress_number"
-                    />
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="destination_adress_city">Cidade</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="destination_adress_city"
-                      v-model="destination_adress_city"
-                    />
-                  </div>
-
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="destination_adress_state">Estado</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="destination_adress_state"
-                      v-model="destination_adress_state"
-                    />
-                  </div>
-                </div>
+                <address-component title="Endereço de entrega" @changed="onChangeDestiny"/>
                 <button
                   type="submit"
                   v-on:click="validateForm"
@@ -169,6 +87,7 @@ import { maska } from "maska";
 // import UserService from '../../domain/user/UserService.js';
 import OrderService from '../../domain/order/OrderService.js';
 import BoaMenu from './../menu/Menu.vue';
+import AddressComponent from './../share/AddressComponent.vue';
 
 export default {
   directives: { maska },
@@ -180,20 +99,47 @@ export default {
       individual_registration: "",
       alert: "form-control",
       required_message: false,
+      destination_adress_zipcode:"",
       destination_adress_street:"",
       destination_adress_number:"",
+      destination_adress_neighborhood:"",
       destination_adress_city:"",
       destination_adress_state:"",
+      origin_adress_zipcode:"",
       origin_adress_street:"",
       origin_adress_number:"",
+      origin_adress_neighborhood:"",
       origin_adress_city:"",
       origin_adress_state:""
     };
   },
   components: {
-		'boa-menu': BoaMenu
+		'boa-menu': BoaMenu,
+		'address-component': AddressComponent
 	},
   methods: {
+    onChangeOrigin(address){
+      console.log("start onChangeOrigin");
+      console.debug(address);
+      this.origin_adress_zipcode = address.zipcode;
+      this.origin_adress_street = address.street;
+      this.origin_adress_number = address.number;
+      this.origin_adress_neighborhood = address.neighborhood;
+      this.origin_adress_city = address.city;
+      this.origin_adress_state = address.state;
+      console.log("end onChangeOrigin");
+    },
+    onChangeDestiny(address){
+      console.log("start onChangeDestiny");
+      console.debug(address);
+      this.destination_adress_zipcode = address.zipcode;
+      this.destination_adress_street = address.street;
+      this.destination_adress_number = address.number;
+      this.destination_adress_neighborhood = address.neighborhood;
+      this.destination_adress_city = address.city;
+      this.destination_adress_state = address.state;
+      console.log("end onChangeDestiny");
+    },
     validateForm: function () {
       this.name == "" ? this.alertRequire() : this.store();
     },
@@ -212,19 +158,23 @@ export default {
           name: this.name,
           birth_date: moment(this.birth_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
           email: this.email,
-          individual_registration: this.individual_registration.replace(/\D/g, ""),
+          cpf: this.individual_registration.replace(/\D/g, ""),
         },
         origin_adress: {
+            zipcode: this.origin_adress_zipcode,
             street: this.origin_adress_street,
             number: this.origin_adress_number,
+            neighborhood: this.origin_adress_neighborhood,
             city: this.origin_adress_city,
             state: this.origin_adress_state,
             country: "BR",
             active: true
         },
         destination_adress: {
+            zipcode: this.destination_adress_zipcode,
             street: this.destination_adress_street,
             number: this.destination_adress_number,
+            neighborhood: this.destination_adress_neighborhood,
             city: this.destination_adress_city,
             state: this.destination_adress_state,
             country: "BR",

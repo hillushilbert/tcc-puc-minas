@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Application\Interfaces\IFindOrder;
 use App\Application\Interfaces\IListOrder;
 use App\Application\Interfaces\IStoreOrder;
 use App\Http\Controllers\Controller;
@@ -27,11 +28,14 @@ class OrderController extends Controller
 {
     
     private $storeOrder;
+    private $listOrder;
+    private $findOrder;
     
-    public function __construct(IStoreOrder $storeOrder, IListOrder $listOrder)
+    public function __construct(IStoreOrder $storeOrder, IListOrder $listOrder, IFindOrder $findOrder)
     {
         $this->storeOrder = $storeOrder;
         $this->listOrder = $listOrder;
+        $this->findOrder = $findOrder;
     }
 
     /**
@@ -89,7 +93,7 @@ class OrderController extends Controller
      */    
     public function show($id)
     {
-        $order = Order::findOrFail($id);
+        $order = $this->findOrder->execute($id);
         return response(['data'=>$order->exportToJson()],200);
     }
 

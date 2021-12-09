@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api\Models;
 
 /**
- * @OA\Schema(schema="NewCustomer", required={"name"})
+ * @OA\Schema(
+ *      schema="NewCustomer", 
+ *      required={"name"}
+ * )
  */
 
 
@@ -19,6 +22,7 @@ namespace App\Http\Controllers\Api\Models;
  *           @OA\Property(property="name", type="string"),
  *           @OA\Property(property="email", type="string", format="email"),
  *           @OA\Property(property="birth_date", type="string", format="date-time"),
+ *           @OA\Property(property="cpf", type="string"),
  *       )
  *   }
  * )
@@ -33,9 +37,11 @@ namespace App\Http\Controllers\Api\Models;
  *       @OA\Schema(ref="#/components/schemas/Adress"),
  *       @OA\Schema(
  *           required={"name"},
+ *           @OA\Property(property="zipcode", type="integer", format="int64"),
  *           @OA\Property(property="street", type="string"),
  *           @OA\Property(property="number", type="integer", format="int64"),
  *           @OA\Property(property="city", type="string"),
+ *           @OA\Property(property="neighborhood", type="string"),
  *           @OA\Property(property="state", type="string"),
  *           @OA\Property(property="country", type="string"),
  *           @OA\Property(property="active", type="boolean"),
@@ -68,7 +74,8 @@ namespace App\Http\Controllers\Api\Models;
  *   allOf={
  *       @OA\Schema(ref="#/components/schemas/Order"),
  *       @OA\Schema(
- *           required={"customer"},
+ *           required={"customer","origin_adress"},
+ *           @OA\Property(property="codigo_rastreamento", type="string"),
  *           @OA\Property(property="customer", ref="#/components/schemas/Customer"),
  *           @OA\Property(property="origin_adress", ref="#/components/schemas/Adress"),
  *           @OA\Property(property="destination_adress", ref="#/components/schemas/Adress"),
