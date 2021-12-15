@@ -63,5 +63,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Application\Interfaces\IFindOrder',
             'App\Application\FindOrder'
         );
+
+        $this->app->bind(
+            'App\Application\Interfaces\IAuthToken',
+            'App\Application\AuthToken'
+        );
     }
 }

@@ -23,6 +23,7 @@ import OrderListComponent from './components/order/OrderListComponent.vue';
 
 export const routes = [
     /* rotas aqui */
+    {path:'/', component: Home, title: "Home", name:'home'},
     {path:'/app', component: Home, title: "Home", name:'home'},
     {path:'/app/login', component: Login, title: "Login", name:'login'},
     {path:'/app/order/create',  name:'order-create', component: OrderCreateComponent, title: "OrderCreateComponent"},

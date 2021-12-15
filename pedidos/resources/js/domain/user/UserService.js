@@ -12,10 +12,10 @@ export default class UserService {
             this.user = JSON.parse(localStorage.getItem('user'));
 
             // mata sessão, caso nao tenha o campo api_token
-            if(this.user.api_token){
+            if(this.user.access_token){
                 this._headers = {
                     headers: {
-                        'Authorization' :"Bearer "+this.user.api_token
+                        'Authorization' :"Bearer "+this.user.access_token
                     }
                 }        
             }
@@ -33,7 +33,7 @@ export default class UserService {
      */
     login(dataPost){
 
-		let url = '/api/login';
+		let url = '/auth/token';
         
         if(!dataPost._token){
             dataPost._token = $('meta[name="csrf-token"]').attr('content'); 
@@ -77,51 +77,12 @@ export default class UserService {
         }
 
         localStorage.removeItem('user');
-        localStorage.removeItem('logo');
-        localStorage.removeItem('login_with_google');
 
         return this._resource.post(url,dataPost);
         
     }
 
-    live(){
-
-        console.log("UserService.live");
-       
-        return this._resource.get('/app/usuario')
-                .then(res => res.json(),
-                      err => {
-                        if(err.status == 419){
-                            throw new Error("Sua sessão foi expirada e você será redirecionado para novo login");
-                        }else if(err.status == 401){
-                            // usuario não autenticado, redireciona para login
-                            throw new Error("Seu usuário não está autenticado e redirecionado para novo login");
-                        }else if(err.status == 403){
-                            throw new Error("Para ter acesso ao FixCards você deve confirmar seu email");
-                        }else{
-                            throw new Error(err.message);
-                        }      
-                      });
-                        
-    }
-
-    async ranking(){
-        console.log("UserService.ranking");
-
-        var ranking  = null;
-        console.log("localStorage::user");
-        
-        let response = await this._resource.get('/api/user/ranking',this._headers);
-        let json = await response.json();
-        ranking = await Promise.resolve(json).then(ranking => ranking);
-        localStorage.setItem('ranking', JSON.stringify(ranking));
-        console.log("ranking online:");
-        
-        console.debug(ranking);
-        
-        return ranking;
-
-    }
+    
 
     async get(){
         

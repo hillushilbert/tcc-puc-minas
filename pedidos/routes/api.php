@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SupplierController;
@@ -24,3 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('customers', CustomerController::class, ['except' => ['create', 'edit']]);
 Route::resource('suppliers', SupplierController::class, ['except' => ['create', 'edit']]);
 Route::resource('orders', OrderController::class, ['except' => ['create', 'edit']]);
+
+Route::post('/auth/token',[AuthController::class,'token'])->name('auth.token');
