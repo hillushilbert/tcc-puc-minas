@@ -1,0 +1,28 @@
+# compose syntax version.
+version: "3.6"
+
+# services declaration.
+services:
+  # Web Application
+  mic:
+    build:
+      args:
+        user: appcadastro
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: hillushilbert/app-pedidos:latest
+    container_name: mic-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - .:/var/www
+    networks:
+      - pucminas
+    command: bash -c "php -S 0.0.0.0:8000 -t public"
+    ports:
+      - 8040:8000
+
+networks:
+  pucminas:
+    external: true

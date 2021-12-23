@@ -1,3 +1,10 @@
+https://newbedev.com/resources-scopes-permissions-and-policies-in-keycloak
+
+https://medium.com/@harsh.manvar111/keycloak-authorization-service-rbac-1c3204a33a50
+
+https://faun.pub/kong-jwt-scope-base-auth-with-keycloak-b9938a96d281
+
+
 curl -s -X POST http://localhost:8001/services -d name=pgadmin -d url=http://pgadmin | python -mjson.tool
 
 {"host":"pgadmin","id":"81d85ce2-341a-4a57-b084-b23be1c48ed6","protocol":"http","read_timeout":60000,"tls_verify_depth":null,"port":80,"updated_at":1639259303,"ca_certificates":null,"created_at":1639259303,"connect_timeout":60000,"write_timeout":60000,"name":"pgadmin","retries":5,"path":null,"tls_verify":null,"tags":null,"client_certificate":null}
