@@ -14,10 +14,12 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return response('Unauthorized.',403);
 });
 
-$router->group(['middleware' => ['accept_json','auth']], function () use ($router) {
+// $router->group(['middleware' => ['accept_json','auth']], function () use ($router) {
     $router->get('/clientes',['as'=>'clientes.index', 'uses' => 'ClientesController@index']);
+    $router->get('/clientes/{id}',['as'=>'clientes.index', 'uses' => 'ClientesController@show']);
+    $router->put('/clientes/{id}',['as'=>'clientes.index', 'uses' => 'ClientesController@update']);
     $router->post('/clientes',['as'=>'clientes.store', 'uses' => 'ClientesController@store']);
-});
+// });

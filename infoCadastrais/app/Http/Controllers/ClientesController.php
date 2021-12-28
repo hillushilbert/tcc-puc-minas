@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Interfaces\IClientesService;
+use App\Http\Requests\StoreClienteRequest;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,36 +11,46 @@ use Illuminate\Validation\Rule;
 
 class ClientesController extends Controller
 {
+
+    public $clientesService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(IClientesService $clientesService)
     {
         //
+        $this->clientesService = $clientesService;
     }
 
     //
     public function index()
     {
-        $clientes = Cliente::get();
-        return response()->json(['data'=>$clientes],200);
+        $data = $this->clientesService->listaClientesAtivos();
+        return response()->json(['data'=>$data],200);
     }
 
-    public function store(Request $request)
+    //
+    public function show($id)
     {
-        $this->validate($request, [
-            'nome' => 'required',
-            'email' => 'required|email|unique:clientes',
-            'cpfOuCnpj' => 'required|unique:clientes',
-            'tp_pessoa' => ['nullable',Rule::in(['F', 'J']),],
-        ]);
+        $data = $this->clientesService->buscarClientePorCpfOuCnpj($id);
+        return response()->json(['data'=>$data],200);
+    }
 
-        $requestData = $request->all();
+    public function store(StoreClienteRequest $request)
+    {
 
-        $id = Cliente::create($requestData);
+        $cliente = $this->clientesService->salvaCliente($request);
 
-        return response()->json(['data'=>$id,'user_id' => Auth::id()],201);
+        return response()->json(['data'=>$cliente,'user_id' => Auth::id()],201);
+    }
+
+    public function update(StoreClienteRequest $request)
+    {
+
+        $cliente = $this->clientesService->salvaCliente($request);
+
+        return response()->json(['data'=>$cliente,'user_id' => Auth::id()],200);
     }
 }

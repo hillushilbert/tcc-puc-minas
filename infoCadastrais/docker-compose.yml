@@ -4,14 +4,15 @@ version: "3.6"
 # services declaration.
 services:
   # Web Application
-  mic:
+  micapp:
     build:
       args:
         user: appcadastro
         uid: 1000
-      context: ./
+      context: ./docker-compose/php
       dockerfile: Dockerfile
-    image: hillushilbert/app-pedidos:latest
+    image: hillushilbert/app-mic:latest
+    # image: php:7.4-fpm
     container_name: mic-app
     restart: unless-stopped
     working_dir: /var/www/
@@ -19,9 +20,21 @@ services:
       - .:/var/www
     networks:
       - pucminas
-    command: bash -c "php -S 0.0.0.0:8000 -t public"
+    # command: bash -c "php -S 0.0.0.0:8000 -t public"
+    # ports:
+    #   - 8040:8000
+
+  mic:
+    image: nginx:alpine
+    container_name: mic-nginx
+    restart: unless-stopped
     ports:
-      - 8040:8000
+      - 8040:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - pucminas
 
 networks:
   pucminas:

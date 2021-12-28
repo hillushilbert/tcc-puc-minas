@@ -14,5 +14,19 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->bind(
+            'App\Http\Interfaces\IClientesRepository',
+            'App\Http\Repository\ClientesRepository'
+        );
+
+        $this->app->bind(
+            'App\Application\Interfaces\IClientesService',
+            'App\Application\ClientesService'
+        );
+
+        $this->app->bind(
+            'App\Application\Interfaces\IClientesSender',
+            'App\Application\ClientesSender'
+        );
     }
 }
