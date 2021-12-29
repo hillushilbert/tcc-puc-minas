@@ -17,8 +17,8 @@ class ClientesSender implements IClientesSender {
         $connection = new AMQPStreamConnection(
             env('RABBITMQ_HOST','rabbit'), 
             env('RABBITMQ_PORT',5672), 
-            env('RABBITMQ_USER','guest'), 
-            env('RABBITMQ_PASSWORD','guest'),
+            env('RABBITMQ_USER','app_pedido'), 
+            env('RABBITMQ_PASSWORD','app_pedido'),
             env('RABBITMQ_VHOST','boaentrega.pedidos')
         );
 

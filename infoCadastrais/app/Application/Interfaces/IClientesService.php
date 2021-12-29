@@ -2,14 +2,14 @@
 
 namespace App\Application\Interfaces;
 
-use App\Http\Requests\StoreClienteRequest;
+use Illuminate\Http\Request;
 use App\Models\Cliente;
 
 interface IClientesService {
 
     public function listaClientesAtivos();
 
-    public function salvaCliente(StoreClienteRequest $cliente) : int;
+    public function salvaCliente(Request $cliente, int $id = null) : int;
 
     public function buscarClientePorCpfOuCnpj(string $cpf) : Cliente;
 

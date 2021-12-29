@@ -5,7 +5,7 @@ namespace App\Application;
 use App\Application\Interfaces\IClientesSender;
 use App\Application\Interfaces\IClientesService;
 use App\Http\Interfaces\IClientesRepository;
-use App\Http\Requests\StoreClienteRequest;
+use Illuminate\Http\Request;
 use App\Models\Cliente;
 
 class ClientesService implements IClientesService {
@@ -24,9 +24,9 @@ class ClientesService implements IClientesService {
         return $this->clientesRepository->getAll();
     }
 
-    public function salvaCliente(StoreClienteRequest $cliente) : int 
+    public function salvaCliente(Request $cliente,int $id = null) : int 
     {
-        $newCliente  = $this->clientesRepository->save($cliente->all());
+        $newCliente  = $this->clientesRepository->save($cliente->all(),$id);
         $this->clientesSender->createQueue();
         $this->clientesSender->createChannel();
         $this->clientesSender->sendMensage(json_encode($newCliente->toJson()));

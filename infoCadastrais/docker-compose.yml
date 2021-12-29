@@ -12,7 +12,6 @@ services:
       context: ./docker-compose/php
       dockerfile: Dockerfile
     image: hillushilbert/app-mic:latest
-    # image: php:7.4-fpm
     container_name: mic-app
     restart: unless-stopped
     working_dir: /var/www/
@@ -20,10 +19,7 @@ services:
       - .:/var/www
     networks:
       - pucminas
-    # command: bash -c "php -S 0.0.0.0:8000 -t public"
-    # ports:
-    #   - 8040:8000
-
+  #Nginx Application
   mic:
     image: nginx:alpine
     container_name: mic-nginx

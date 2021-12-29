@@ -19,9 +19,14 @@ class ClientesRepository implements IClientesRepository {
         return $cliente;
     }
 
-    public function save(array $resquestData) : Cliente
+    public function save(array $resquestData, int $id = null) : Cliente
     {
-        $cliente = Cliente::firstOrNew(['cpfOuCnpj',$resquestData['cpfOuCnpj']]);
+        if($id){
+            $cliente = Cliente::findOrFail($id);
+        }else{
+            $cliente = Cliente::firstOrNew(['cpfOuCnpj'=>$resquestData['cpfOuCnpj']]);
+        }
+        
         $cliente->fill($resquestData);
         $cliente->save();
         return $cliente;

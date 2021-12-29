@@ -10,5 +10,5 @@ interface IClientesRepository {
 
     public function getById(string $id) : ?Cliente;
 
-    public function save(array $requestData) : Cliente;
+    public function save(array $requestData,int $id = null) : Cliente;
 }

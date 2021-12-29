@@ -13,6 +13,8 @@ class ClientesController extends Controller
 {
 
     public $clientesService;
+
+    protected $rules;
     /**
      * Create a new controller instance.
      *
@@ -22,6 +24,13 @@ class ClientesController extends Controller
     {
         //
         $this->clientesService = $clientesService;
+
+        $this->rules = [
+            'nome' => 'required',
+            'email' => 'required|email|unique:clientes,email',
+            'cpfOuCnpj' => 'required|unique:clientes,cpfOuCnpj',
+            'tp_pessoa' => ['nullable',Rule::in(['F', 'J']),],
+        ];
     }
 
     //
@@ -38,18 +47,23 @@ class ClientesController extends Controller
         return response()->json(['data'=>$data],200);
     }
 
-    public function store(StoreClienteRequest $request)
+    public function store(Request $request)
     {
+        $this->validate($request,$this->rules);
 
         $cliente = $this->clientesService->salvaCliente($request);
 
         return response()->json(['data'=>$cliente,'user_id' => Auth::id()],201);
     }
 
-    public function update(StoreClienteRequest $request)
+    public function update(Request $request,$id)
     {
+        $rules = $this->rules;
+        $rules['email'] .= ",".$id;
+        $rules['cpfOuCnpj'] .= ",".$id;
+        $this->validate($request,$rules);
 
-        $cliente = $this->clientesService->salvaCliente($request);
+        $cliente = $this->clientesService->salvaCliente($request,$id);
 
         return response()->json(['data'=>$cliente,'user_id' => Auth::id()],200);
     }
