@@ -43,5 +43,13 @@ class Cliente extends Model {
         'cep',
     ];
 
+    public function isPessoaFisica(){
+        return ($this->tp_pessoa == 'F') ? true : false;
+    }
+
+    public function isPessoaJuridica(){
+        return ($this->tp_pessoa == 'J') ? true : false;
+    }
+
 
 }

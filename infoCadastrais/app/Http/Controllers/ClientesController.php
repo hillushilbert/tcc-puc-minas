@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 class ClientesController extends Controller
 {
 
-    public $clientesService;
+    protected $clientesService;
 
     protected $rules;
     /**
