@@ -23,7 +23,7 @@ export default class OrderService {
 
 	async store(record){
         //let url = this.$props.save_url;
-        let url = '/pedidos/orders';
+        let url = '/api/orders';
         //var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
         return await this._resource.post(url,record,
@@ -72,7 +72,7 @@ export default class OrderService {
     resposta(id,dataPost){
 
         //let url = this.$props.save_url;
-        let url = '/pedidos/exame/'+id;
+        let url = '/api/exame/'+id;
        // var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
         return this._resource.post(url,{
@@ -115,7 +115,7 @@ export default class OrderService {
      * @param {*} id_colecao 
      */
     index() {
-        return this._resource.get('/pedidos/orders')
+        return this._resource.get('/api/orders')
         .then(res => res.json());
     }
 
@@ -128,7 +128,7 @@ export default class OrderService {
      */    
      async show(id) {
 
-        let url = '/pedidos/orders/'+id;
+        let url = '/api/orders/'+id;
         
         return await this._resource.get(url,this._headers)
             .then(

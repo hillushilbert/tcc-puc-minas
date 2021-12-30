@@ -7,7 +7,6 @@ use App\Application\Interfaces\IListOrder;
 use App\Application\Interfaces\IStoreOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
-use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -150,14 +149,5 @@ class OrderController extends Controller
         }
     }
 
-    public function update()
-    {
-        return abort(405,'Não implementado');
-    } 
-
-    public function delete()
-    {
-        return abort(405,'Não implementado');
-    } 
 
 }

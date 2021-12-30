@@ -40,13 +40,7 @@ class ConsumerChangeEntregaCommand extends Command
      */
     public function handle()
     {
-        $connection = new AMQPStreamConnection(
-            env('RABBITMQ_HOST','rabbit'), 
-            env('RABBITMQ_PORT',5672), 
-            env('RABBITMQ_USER','guest'), 
-            env('RABBITMQ_PASSWORD','guest'),
-            env('RABBITMQ_VHOST','AppHubb')
-        );
+        $connection = $this->getConnection();
 
         $channel = $connection->channel();
         $channel->exchange_declare(env('RABBITMQ_EXCHANGE'), 'direct', false, true, false);
@@ -97,4 +91,18 @@ class ConsumerChangeEntregaCommand extends Command
 
         return Command::SUCCESS;
     }
+
+    private function getConnection() : AMQPStreamConnection
+    {
+        $connection = new AMQPStreamConnection(
+            env('RABBITMQ_HOST','rabbit'), 
+            env('RABBITMQ_PORT',5672), 
+            env('RABBITMQ_USER','guest'), 
+            env('RABBITMQ_PASSWORD','guest'),
+            env('RABBITMQ_VHOST','AppHubb')
+        );
+
+        return $connection;
+    }
+
 }

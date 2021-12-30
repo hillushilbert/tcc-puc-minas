@@ -7,12 +7,12 @@ use App\Models\Order;
 
 class OrderDTO {
 
-    private $string;
+    private $payload;
     private $data;
 
     public function __construct(string $data)
     {
-        $this->string = $data;
+        $this->payload = $data;
         $this->data = json_decode($data);
          
     }
@@ -50,7 +50,7 @@ class OrderDTO {
 
     public function toArray() : array
     {
-        return json_decode($this->string,true);
+        return json_decode($this->payload,true);
     }
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Application;
 
+use App\Factory\AMQPFactory;
 use Illuminate\Support\Facades\Log;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -26,13 +27,7 @@ class InformarRoteamentoPedido {
 
         $exchange = env('RABBITMQ_EXCHANGE');
               
-        $connection = new AMQPStreamConnection(
-            env('RABBITMQ_HOST','rabbit'), 
-            env('RABBITMQ_PORT',5672), 
-            env('RABBITMQ_USER','guest'), 
-            env('RABBITMQ_PASSWORD','guest'),
-            env('RABBITMQ_VHOST','boaentrega.pedidos')
-        );
+        $connection = AMQPFactory::getConnection();
 
         $queue_pedido_novo = env('RABBITMQ_QUEUE_ROTEAMENTO','boaentrega.pedidos.roteamento');
 

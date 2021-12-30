@@ -22,6 +22,7 @@ class AuthToken implements IAuthToken {
             "password"=>$request->password,
             'grant_type'=>'password',
             "client_id"=>"app",
+            'client_secret'=>'335fe75e-19cd-4d52-8c24-7972f8f78b9b'
         ];
 
         // $access_token = '';

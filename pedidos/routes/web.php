@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Auth::routes();
 
@@ -26,7 +26,7 @@ Route::get('/swaggerV1', function () {
 
 // rota generica para evitar erro de recarga no spa
 //https://laravel-news.com/using-vue-router-laravel
-Route::get('/{any?}', function() {
+Route::get('/app/{any?}', function() {
     return view('app');
 })->where('any', '.*')
 ;

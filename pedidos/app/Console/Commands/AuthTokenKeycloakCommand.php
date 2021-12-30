@@ -49,7 +49,7 @@ class AuthTokenKeycloakCommand extends Command
     public function getOrders($access_token){
         $headers = [
             "Accept"=>"application/json",
-            // "Authorization" => "Bearer ".$access_token
+            "Authorization" => "Bearer ".$access_token
         ];
 
         $url = 'http://kong:8000/pedidos/orders';
