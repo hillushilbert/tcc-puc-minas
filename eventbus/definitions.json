@@ -14,6 +14,14 @@
             "routing_key": "boaentrega.pedidos.roteamento",
             "source": "novo_pedido",
             "vhost": "boaentrega.pedidos"
+        },
+        {
+            "arguments": {},
+            "destination": "boaentrega.pedidos.pipeline",
+            "destination_type": "queue",
+            "routing_key": "boaentrega.pedidos.novo",
+            "source": "novo_pedido",
+            "vhost": "boaentrega.pedidos"
         }
     ],
     "exchanges": [{
@@ -71,6 +79,16 @@
             "auto_delete": false,
             "durable": true,
             "name": "boaentrega.pedidos.roteamento",
+            "type": "classic",
+            "vhost": "boaentrega.pedidos"
+        },
+        {
+            "arguments": {
+                "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "name": "boaentrega.pedidos.pipeline",
             "type": "classic",
             "vhost": "boaentrega.pedidos"
         }

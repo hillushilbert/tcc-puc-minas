@@ -81,7 +81,7 @@ class DespachoCommand extends Command
                     $customer = $orderDTO->transformDataToCustomer();
                     
                     // envia email de notificação
-                    $customer->sendOrderShippedNotification($order,$codigo_rastreamento);
+                    // $customer->sendOrderShippedNotification($order,$codigo_rastreamento);
                     
                     // gravar na fila de pedidos despachados o codigo_rastreamento e o numero do pedido
                     $informarRoteamentoPedido = new InformarRoteamentoPedido();
