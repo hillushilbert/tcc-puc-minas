@@ -16,6 +16,12 @@
                 <i class="material-icons app-secondary-color-text"></i> Início
             </router-link>
           </li>
+          <li class="nav-item">
+            <!-- <a class="nav-link active" aria-current="page" href="#">Active</a> -->
+            <router-link :to="{name:'customer-create'}" class="nav-link active" aria-current="page">
+                <i class="material-icons app-secondary-color-text"></i> Novo Cliente
+            </router-link>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pedidos</a>
             <ul class="dropdown-menu">

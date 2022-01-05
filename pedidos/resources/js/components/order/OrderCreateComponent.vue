@@ -7,7 +7,7 @@
           <div class="card">
             <div class="card-header">Novo Pedido</div>
             <div class="card-body">
-              <a href="/student" class="btn btn-primary mb-3"
+              <a href="/home" class="btn btn-primary mb-3"
                 ><i class="fas fa-arrow-left"></i> Voltar</a
               >
               <form v-on:submit.prevent>

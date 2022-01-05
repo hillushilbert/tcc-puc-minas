@@ -18,6 +18,11 @@ import BoaMenu from './../menu/Menu.vue';
 export default {
   components: {
 		'boa-menu': BoaMenu
+	},
+  data() {
+		return {
+        name: 'Guest'
+		};
 	}
 }
 </script>

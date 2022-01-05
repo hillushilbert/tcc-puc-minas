@@ -15,19 +15,29 @@ class RequestAcceptJsonMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->isMethod('get')) {
+          
+        
+        if ($request->isMethod('OPTIONS'))
+        {
+            return $next($request);
+        }
+        else if (!$request->isMethod('get')) 
+        {
             //
             $accept = $request->header('accept');
-            if($accept  != 'application/json'){
-                return response()->json(['Retorno apenas em formato Json'],406);
+            $accept = explode(', ',$accept);
+            if(!in_array('application/json',$accept)){
+                return response()->json(['Retorno apenas em formato Json : '.$accept],406);
             }
 
             $contentType = $request->header('content-type');
-            if($contentType  != 'application/json'){
-                return response()->json(['Aceito apenas conteudo em formato Json'],407);
+            $contentType = explode(';',$contentType);
+            if(!in_array('application/json',$contentType)){
+                return response()->json(['Content-Type deve ser application/json : '. $contentType  ],407);
             }
         }
-        else{
+        else
+        {
             $request->header('content-type','application/json');
             $request->header('accept','application/json');
         }

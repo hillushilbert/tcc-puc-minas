@@ -1,23 +1,9 @@
+import Service from '../Service.js';
 
-export default class OrderService {
+export default class OrderService extends Service {
 
     constructor(resource) {
-
-        this._resource = resource;
-                
-        this.user = JSON.parse(localStorage.getItem('user'));
-
-        // mata sessão, caso nao tenha o campo api_token
-        if(this.user == null || this.user.api_token == undefined){
-            console.log("sem api_token");
-            this._headers = {};
-        }else{
-            this._headers = {
-                headers: {
-                    'Authorization' :"Bearer "+this.user.api_token
-                }
-            }            
-        } 
+        super(resource); 
 
     }
 
@@ -30,11 +16,11 @@ export default class OrderService {
         this._headers)
         .then(
             res => {
-                console.log("ExameService::iniciar success");
+                console.log("OrderService::iniciar success");
                 return res.json();
             },
             err => {
-                console.log("ExameService:: iniciar error");
+                console.log("OrderService:: iniciar error");
                 console.debug(err);
                 if(err.status == 419){
                     Swal.fire({
@@ -85,7 +71,7 @@ export default class OrderService {
             .then(
                 res => res.json(),
                 err => {
-                    console.log("ExameService:: resposta error");
+                    console.log("OrderService:: resposta error");
                     console.debug(err);
                     if(err.status == 419){
                         Swal.fire({
@@ -134,7 +120,7 @@ export default class OrderService {
             .then(
                 res => res.json(),
                 err => {
-                    console.log("ExameService:: iniciar error");
+                    console.log("OrderService:: iniciar error");
                     console.debug(err);
                     if(err.status == 419){
                         Swal.fire({

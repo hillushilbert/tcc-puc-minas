@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::resource('customers', CustomerController::class, ['except' => ['create', 'edit']]);
 Route::resource('suppliers', SupplierController::class, ['except' => ['create', 'edit']]);
 Route::resource('orders', OrderController::class, ['except' => ['create', 'edit']]);

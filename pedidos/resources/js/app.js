@@ -25,6 +25,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = true;
 
 /**
  * The following block of code may be used to automatically register your

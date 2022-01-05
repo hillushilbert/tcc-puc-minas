@@ -73,6 +73,7 @@ $app->configure('app');
 */
 
 $app->middleware([
+    App\Http\Middleware\CorsMiddleware::class,
     App\Http\Middleware\RequestAcceptJsonMiddleware::class
 ]);
 
@@ -83,6 +84,7 @@ $app->routeMiddleware([
 
 $app->routeMiddleware([
     'accept_json' => App\Http\Middleware\RequestAcceptJsonMiddleware::class,
+    'cors' => App\Http\Middleware\CorsMiddleware::class,
 ]);
 
 /*
