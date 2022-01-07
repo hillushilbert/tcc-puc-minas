@@ -28,6 +28,9 @@
                       </div>
                       <button class="btn btn-primary" type="submit"
                        v-on:click="authForm">Entrar</button>
+                       
+                       <button class="btn btn-primary" type="button"
+                       v-on:click="refreshToken">Refresh token</button>
                     </form>
                 </div>
                 </div>
@@ -49,6 +52,25 @@ export default {
   },
   methods: {
 
+    refreshToken: async function () {
+        let user_service  = new UserService(this.$http);
+        let data = {
+          refresh_token: localStorage.getItem('refresh_token')
+        };
+
+        console.log("realizando refresh token");
+        try
+        {
+          let response = await user_service.refresh_token(data);
+          console.debug(response);
+        }
+        catch(e)
+        {
+          console.debug(e);
+          this.errorSubmit()
+        }
+
+    },
     authForm: async function () {
         let user_service  = new UserService(this.$http);
         let data = {
@@ -69,7 +91,7 @@ export default {
         catch(e)
         {
           console.debug(e);
-          this.errorSubmit()
+          this.errorSubmit({error_description:""});
         }
     },
     saveData: function (response) {

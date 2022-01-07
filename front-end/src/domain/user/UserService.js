@@ -29,17 +29,12 @@ export default class UserService extends Service {
         ; 
     }
 
-    refresh_token(){
+    refresh_token(dataPost){
 
         console.log("UserService.refresh_token");
        
-        return this._resource.get('/refresh_token')
-                .then(res => res.json()).
-                then(res=>{
-                    $('meta[name="csrf-token"]').attr('content', res.token);
-                    console.log("novo tolen csrf-token");
-                    console.debug( res.token);
-                });                    
+        return this._resource.post('auth/refresh_token',dataPost)
+                             .then(res => res.json());                    
     }
 
 

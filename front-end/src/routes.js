@@ -2,6 +2,7 @@
 
 import Home from './components/home/Home.vue';
 import Login from './components/home/Login.vue';
+import Logout from './components/home/Logout.vue';
 import CustomerCreateComponent from './components/customer/CustomerCreateComponent.vue';
 import OrderCreateComponent from './components/order/OrderCreateComponent.vue';
 import OrderEditComponent from './components/order/OrderEditComponent.vue';
@@ -27,6 +28,7 @@ export const routes = [
     {path:'/', component: Home, title: "Home", name:'home'},
     {path:'/app', component: Home, title: "Home", name:'home'},
     {path:'/app/login', component: Login, title: "Login", name:'login'},
+    {path:'/app/logout', component: Logout, title: "Logout", name:'logout'},
     {path:'/app/order/create',  name:'order-create', component: OrderCreateComponent, title: "OrderCreateComponent"},
     {path:'/app/customer/create',  name:'customer-create', component: CustomerCreateComponent, title: "CustomerCreateComponent"},
     {path:'/app/order/list',  name:'order-list', component: OrderListComponent, title: "OrderListComponent"}, /* falta implementar */

@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Application\Interfaces\IAuthToken;
+use App\Application\Interfaces\IRefreshToken;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthTokenRequest;
+use App\Http\Requests\RefreshTokenRequest;
 use Illuminate\Http\Request;
 
 
 class AuthController extends Controller
 {
     
-    public $authToken;
+    protected $authToken;
+    protected $refreshToken;
 
-    public function __construct(IAuthToken $authToken)
+    public function __construct(IAuthToken $authToken, IRefreshToken $refreshToken)
     {
         $this->authToken = $authToken;
+        $this->refreshToken = $refreshToken;
     }
 
     /**
@@ -39,8 +43,13 @@ class AuthController extends Controller
     public function token(AuthTokenRequest $request)
     {
         $response = $this->authToken->execute($request);
-        // dump($response); 
-        return response($response->json(),200);  
+        return response($response->json(),$response->status());  
+    }
+
+    public function refresh_token(RefreshTokenRequest $request)
+    {
+        $response = $this->refreshToken->execute($request);
+        return response($response->json(),$response->status());  
     }
 
 

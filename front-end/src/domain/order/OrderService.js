@@ -8,10 +8,10 @@ export default class OrderService extends Service {
     }
 
 	async store(record){
-        //let url = this.$props.save_url;
         let url = 'pedidos/orders';
-        //var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
+        
+        return this.post(url,record);
+        /*
         return await this._resource.post(url,record,
         this._headers)
         .then(
@@ -40,7 +40,8 @@ export default class OrderService extends Service {
                     throw err.body.message;
                 }
             }
-        );	
+        );
+        */	
 	}
 	
 	update(record,id){
@@ -100,8 +101,8 @@ export default class OrderService extends Service {
      * retorn promisse com comunicação para retorno de uma colecao
      * @param {*} id_colecao 
      */
-    index() {
-        return this._resource.get('pedidos/orders')
+    async index() {
+        return await this._resource.get('pedidos/orders',this._headers)
         .then(res => res.json());
     }
 

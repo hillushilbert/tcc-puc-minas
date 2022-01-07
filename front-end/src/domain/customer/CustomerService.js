@@ -8,10 +8,10 @@ export default class CustomerService extends Service {
     }
 
 	async store(record){
-        //let url = this.$props.save_url;
         let url = 'mic/clientes';
-        //var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
+        
+        return await this.post(url,record);
+        /*
         return await this._resource.post(url,record,
         this._headers)
         .then(
@@ -41,6 +41,7 @@ export default class CustomerService extends Service {
                 }
             }
         );	
+        */
 	}
 	
 	update(record,id){

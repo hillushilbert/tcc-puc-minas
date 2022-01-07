@@ -28,3 +28,4 @@ Route::resource('suppliers', SupplierController::class, ['except' => ['create', 
 Route::resource('orders', OrderController::class, ['except' => ['create', 'edit']]);
 
 Route::post('/auth/token',[AuthController::class,'token'])->name('auth.token');
+Route::post('/auth/refresh_token',[AuthController::class,'refresh_token'])->name('auth.refresh_token');

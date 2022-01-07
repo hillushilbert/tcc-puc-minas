@@ -195,18 +195,20 @@ export default {
         };
 
         console.log("enviando dados de order");
+        let response = null;
         try
         {
-          let response = await order_service.store(data);
+          response = await order_service.store(data);
+          console.log("resposta store order");
           console.debug(response);
           response.success == true
                          ? this.clearForm(response.message)
-                         : this.errorSubmit();
+                         : this.errorSubmit(response.statusText,response.bodyText);
         }
-        catch(e)
+        catch(err)
         {
-          console.debug(e);
-          this.errorSubmit()
+          console.log("Erro ao inserir novo cliente");
+          this.errorSubmit("Error",err.message)
         }
     },
     clearForm: function (message) {
@@ -229,11 +231,12 @@ export default {
         // }
       });
     },
-    errorSubmit: function () {
+    errorSubmit: function (title,message) {
       this.$swal({
         position: "center",
         icon: "error",
-        title: "O Cliente não pode ser cadastrado!",
+        title: title,
+        text: message,
         showConfirmButton: false,
         timer: 3000,
       });

@@ -68,5 +68,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Application\Interfaces\IAuthToken',
             'App\Application\AuthToken'
         );
+        
+        $this->app->bind(
+            'App\Application\Interfaces\IRefreshToken',
+            'App\Application\RefreshToken'
+        );
     }
 }
