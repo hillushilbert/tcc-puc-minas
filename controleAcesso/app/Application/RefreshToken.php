@@ -2,16 +2,15 @@
 
 namespace App\Application;
 
-use App\Application\Interfaces\IAuthToken;
+
 use App\Application\Interfaces\IRefreshToken;
-use App\Http\Requests\AuthTokenRequest;
-use App\Http\Requests\RefreshTokenRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class RefreshToken implements IRefreshToken {
 
 
-    public function execute(RefreshTokenRequest $request) : \Illuminate\Http\Client\Response
+    public function execute(Request $request) : \Illuminate\Http\Client\Response
     {
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded'

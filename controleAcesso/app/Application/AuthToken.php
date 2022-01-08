@@ -3,13 +3,13 @@
 namespace App\Application;
 
 use App\Application\Interfaces\IAuthToken;
-use App\Http\Requests\AuthTokenRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class AuthToken implements IAuthToken {
 
 
-    public function execute(AuthTokenRequest $request) : \Illuminate\Http\Client\Response
+    public function execute(Request $request) : \Illuminate\Http\Client\Response
     {
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded'

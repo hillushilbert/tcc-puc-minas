@@ -64,14 +64,5 @@ class AppServiceProvider extends ServiceProvider
             'App\Application\FindOrder'
         );
 
-        $this->app->bind(
-            'App\Application\Interfaces\IAuthToken',
-            'App\Application\AuthToken'
-        );
-        
-        $this->app->bind(
-            'App\Application\Interfaces\IRefreshToken',
-            'App\Application\RefreshToken'
-        );
     }
 }

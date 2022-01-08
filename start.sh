@@ -24,3 +24,9 @@ docker-compose ps
 cd ../sge
 docker-compose up -d
 docker-compose ps
+cd ../infoCadastrais
+docker-compose up -d
+docker-compose ps
+cd ../controleAcesso
+docker-compose up -d
+docker-compose ps

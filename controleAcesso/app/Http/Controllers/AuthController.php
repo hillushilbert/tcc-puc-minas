@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Application\Interfaces\IAuthToken;
 use App\Application\Interfaces\IRefreshToken;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthTokenRequest;
-use App\Http\Requests\RefreshTokenRequest;
 use Illuminate\Http\Request;
-
 
 class AuthController extends Controller
 {
@@ -40,14 +37,24 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function token(AuthTokenRequest $request)
+    public function token(Request $request)
     {
+        $this->validate($request,[
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
         $response = $this->authToken->execute($request);
         return response($response->json(),$response->status());  
     }
 
-    public function refresh_token(RefreshTokenRequest $request)
+    public function refresh_token(Request $request)
     {
+        $this->validate($request,[
+            'refresh_token' => 'required',
+        ]);
+
+
         $response = $this->refreshToken->execute($request);
         return response($response->json(),$response->status());  
     }
