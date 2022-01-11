@@ -21,9 +21,17 @@ class Order extends Model {
         'width',
         'length',
         'codigo_rastreamento',
+        'roteamento',
     ];
 
-    protected $appends = ['roteamento'];
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'roteamento' => 'array',
+    ];
 
     public function customer()
     {
@@ -43,16 +51,6 @@ class Order extends Model {
     public function destiny()
     {
         return $this->belongsTo('App\Models\Adress','destination_adress_id','id');
-    }
-
-    public function setRoteamentoAttribute($value)
-    {
-        $this->attributes['roteamento'] = $value;
-    }
-
-    public function getRoteamentoAttribute()
-    {
-        return $this->attributes['roteamento'] ?? null;
     }
 
     public function exportToJson()

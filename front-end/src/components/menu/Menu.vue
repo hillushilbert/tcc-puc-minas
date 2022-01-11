@@ -107,6 +107,10 @@ export default {
           }
           catch(e)
           {
+            console.log("erro ao realizar refresh");
+            if(e.status == 400){
+              self.$router.push({ name: 'logout'});
+            }
             console.debug(e);
           }   
         }, 1000 * expires);

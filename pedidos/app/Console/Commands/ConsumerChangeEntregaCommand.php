@@ -64,6 +64,7 @@ class ConsumerChangeEntregaCommand extends Command
 
                 $order = Order::findOrFail($payload->orderId);
                 $order->codigo_rastreamento = $payload->codigo_rastreamento;
+                $order->roteamento = $payload->roteamento;
                 $order->save();
 
                 $msg->ack();

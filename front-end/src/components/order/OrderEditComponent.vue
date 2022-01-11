@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-3">
                   <label for="Status"><strong>Status:</strong> </label><br>
-                  <span id="Status" >{{ order.roteamento.status.name }}</span>
+                  <span id="Status" v-if="order.roteamento">{{ order.roteamento.status.name }}</span>
                 </div>
               </div>
               <div class="table-responsive">
@@ -42,13 +42,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(r, index) in order.roteamento.roteiro">
+                      <tr v-if="order.roteamento" v-for="(r, index) in order.roteamento.roteiro">
                         <th>{{ r.id }}</th>
                         <td>{{ r.de }}</td>
                         <td>{{ r.para}}</td>
                         <td>{{ r.iniciado ? 'Sim':"Não"}}</td>
                         <td>{{ r.concluido ? 'Sim':"Não"}}</td>
                         <td>{{ r.id == order.roteamento.rota_atual_id ? 'Sim':"Não"}}</td>
+                      </tr>
+                      <tr v-else>
+                          <th colspan="6">Sem dados de roteamento no momento.</th>
                       </tr>
                     </tbody>
                   </table>

@@ -15,6 +15,9 @@ class FindOrder implements IFindOrder {
         
         if($order->codigo_rastreamento)
         {
+            // trocar logica para solicitar atualizacao do pedido via fila
+            
+            /*
             $headers = [
                 'content-Type' => 'application/json',
                 'accept' => 'application/json',
@@ -30,7 +33,7 @@ class FindOrder implements IFindOrder {
                 unset($roteamento['dados_pedido']);
             }
             $order->roteamento = $roteamento;
-                     
+            */      
         }
         
         return $order;

@@ -3,6 +3,7 @@
 namespace App\Application;
 
 use App\Factory\AMQPFactory;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -21,6 +22,7 @@ class InformarRoteamentoPedido {
         $payload = new stdClass;
         $payload->orderId = $orderId;
         $payload->codigo_rastreamento = $codigo_rastreamento;
+        $payload->roteamento = $this->getRoteamento($codigo_rastreamento);
 
 
         Log::info("enviando mensagem para o rabbit");
@@ -48,5 +50,27 @@ class InformarRoteamentoPedido {
         $channel->close();
         
         $connection->close();
+    }
+
+
+    private function getRoteamento($codigo_rastreamento)
+    {
+        $headers = [
+            'content-Type' => 'application/json',
+            'accept' => 'application/json',
+        ];
+
+        $url = env('API_SGE').'/api/entrega/'.$codigo_rastreamento;
+
+        $response = Http::withHeaders($headers)
+                        ->get($url);
+
+        $roteamento = $response->json() ?? null;
+        
+        if($roteamento){
+            unset($roteamento['dados_pedido']);
+        }
+
+        return $roteamento;
     }
 }

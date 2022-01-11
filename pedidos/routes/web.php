@@ -24,9 +24,9 @@ Route::get('/swaggerV1', function () {
     return view('swagger');
 });
 
-// rota generica para evitar erro de recarga no spa
-//https://laravel-news.com/using-vue-router-laravel
-Route::get('/app/{any?}', function() {
-    return view('app');
-})->where('any', '.*')
-;
+// // rota generica para evitar erro de recarga no spa
+// //https://laravel-news.com/using-vue-router-laravel
+// Route::get('/app/{any?}', function() {
+//     return view('app');
+// })->where('any', '.*')
+// ;
