@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @OA\Info(title="API Pedidos", version="0.1")
+ * @OA\Info(title="API GSL", version="0.1")
  * 
  * @OA\SecurityScheme(
  *      securityScheme="bearerAuth",
@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\DB;
  *      type="http",
  *      scheme="bearer",
  *      bearerFormat="JWT",
+ * ),
+ * 
+ * @OA\Server(
+ *      url="http://localhost:8000",
+ *      description="Homologacao"
  * ),
  * 
  */
@@ -39,7 +44,7 @@ class OrderController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/orders",
+     *     path="/pedidos/orders",
      *     description="Retorna uma lista de pedidos",
      *      tags={"Order"},
      *     security={{"bearerAuth":{}}},
@@ -64,7 +69,7 @@ class OrderController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/orders/{id}",
+     *     path="/pedidos/orders/{id}",
      *     description="Retorna um pedido por id",
      *     tags={"Order"},
      *     security={{"bearerAuth":{}}},
@@ -98,7 +103,7 @@ class OrderController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/orders",
+     *     path="/pedidos/orders",
      *     operationId="storeOrder",
      *     description="Armazena um novo pedido",
      *     security={{"bearerAuth":{}}},

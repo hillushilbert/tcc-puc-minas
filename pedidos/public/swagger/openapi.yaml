@@ -1,7 +1,11 @@
 openapi: 3.0.0
 info:
-  title: 'API Pedidos'
+  title: 'API GSL'
   version: '0.1'
+servers:
+  -
+    url: 'http://localhost:8000'
+    description: Homologacao
 paths:
   /api/customer:
     get:
@@ -123,12 +127,173 @@ paths:
       security:
         -
           bearerAuth: []
-  /api/orders:
+  /auth/token:
+    post:
+      tags:
+        - Auth
+      description: 'Recupera o token de autenticação JWT'
+      operationId: authToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /auth/refresh_token:
+    post:
+      tags:
+        - Auth
+      description: 'Recupera o token de autenticação JWT'
+      operationId: authToken
+      requestBody:
+        description: 'Open-id connect response'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /mic/clientes:
+    get:
+      tags:
+        - InformacoesCadastrais
+      description: 'Retorna a lista de clientes cadastrados'
+      parameters:
+        -
+          name: id
+          in: query
+          description: 'id do cliente'
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+  '/mic/clientes/{id}':
+    get:
+      tags:
+        - InformacoesCadastrais
+      description: 'Retorna um cliente cadastrado'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do cliente'
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    put:
+      tags:
+        - InformacoesCadastrais
+      description: 'Atualiza um cliente cadastrado'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do cliente'
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+    delete:
+      tags:
+        - InformacoesCadastrais
+      description: 'Remove um cliente cadastrado'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'id do cliente'
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: 'Missing Data'
+          content:
+            application/json:
+              schema: {  }
+      security:
+        -
+          bearerAuth: []
+  /pedidos/orders:
     get:
       tags:
         - Order
       description: 'Retorna uma lista de pedidos'
-      operationId: 955bb77a45ae173a485fadb8befed93f
+      operationId: b2a2e4a82434a72d2c7abc33c2fc6ad1
       responses:
         '200':
           description: OK
@@ -168,12 +333,12 @@ paths:
       security:
         -
           bearerAuth: []
-  '/api/orders/{id}':
+  '/pedidos/orders/{id}':
     get:
       tags:
         - Order
       description: 'Retorna um pedido por id'
-      operationId: 88d27387b1e409e075c18609d4a0c300
+      operationId: 2e7c695e6a001416756c11d923b98af6
       parameters:
         -
           name: id
@@ -455,6 +620,55 @@ components:
               type: string
             status:
               type: number
+          type: object
+    AuthToken:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/AuthToken'
+        -
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+          type: object
+    RefreshTokenRequest:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/RefreshTokenRequest'
+        -
+          required:
+            - refresh_token
+          properties:
+            refresh_token:
+              type: string
+          type: object
+    AuthTokenResponse:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/AuthTokenResponse'
+        -
+          required:
+            - email
+            - password
+          properties:
+            access_token:
+              type: string
+            expires_in:
+              type: string
+            refresh_expires_in:
+              type: string
+            refresh_token:
+              type: string
+            token_type:
+              type: string
           type: object
   securitySchemes:
     bearerAuth:

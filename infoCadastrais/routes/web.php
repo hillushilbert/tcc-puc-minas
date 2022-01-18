@@ -21,5 +21,6 @@ $router->get('/', function () use ($router) {
     $router->get('/clientes',['as'=>'clientes.index', 'uses' => 'ClientesController@index']);
     $router->get('/clientes/{id}',['as'=>'clientes.index', 'uses' => 'ClientesController@show']);
     $router->put('/clientes/{id}',['as'=>'clientes.index', 'uses' => 'ClientesController@update']);
+    $router->delete('/clientes/{id}',['as'=>'clientes.index', 'uses' => 'ClientesController@delete']);
     $router->post('/clientes',['as'=>'clientes.store', 'uses' => 'ClientesController@store']);
 // });

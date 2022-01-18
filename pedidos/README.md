@@ -19,3 +19,6 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 - **[swagger.ui](https://github.com/swagger-api/swagger-ui)**
 - **[swagger-php](https://github.com/zircote/swagger-php)**
 - **[swagger-petstore-sample](https://github.com/zircote/swagger-php/blob/master/Examples/swagger-spec/petstore-simple/api.php)**
+
+
+https://medium.com/@tatianaensslin/how-to-add-swagger-ui-to-php-server-code-f1610c01dc03

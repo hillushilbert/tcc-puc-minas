@@ -1,13 +1,13 @@
 <template>
       <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                <div class="card-header">Login</div>
+            <div class="col-md-6 col-lg-4 col-sm-10">
+              <div class="card">
+                <div class="card-header">GSL - Boa Entrega</div>
                 <div class="card-body">
                     <form v-on:submit.prevent>
                       <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-sm-12 col-md-12 ">
                           <label for="name">Nome</label>
                           <input
                             type="text"
@@ -16,7 +16,7 @@
                             v-model="username"
                           />
                         </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-sm-12 col-md-12 ">
                           <label for="name">Senha</label>
                           <input
                             type="password"
@@ -26,14 +26,15 @@
                           />
                         </div>
                       </div>
-                      <button class="btn btn-primary" type="submit"
-                       v-on:click="authForm">Entrar</button>
-                       
-                       <button class="btn btn-primary" type="button"
-                       v-on:click="refreshToken">Refresh token</button>
+                      <div class="row">
+                        <div class="col-12 col-md-12">
+                          <button class="btn btn-primary" type="submit"
+                          v-on:click="authForm">Entrar</button>
+                        </div>
+                      </div>
                     </form>
                 </div>
-                </div>
+              </div>
             </div>
         </div>
       </div>
@@ -119,3 +120,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  div.card {
+    margin-top:15%;
+  }
+</style>

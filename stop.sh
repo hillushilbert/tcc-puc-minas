@@ -1,0 +1,16 @@
+cd apigateway
+docker-compose down
+cd ../identity
+docker-compose down
+cd ../eventbus
+docker-compose down
+cd ../pedidos
+docker-compose down
+cd ../despacho
+docker-compose down
+cd ../sge
+docker-compose down
+cd ../infoCadastrais
+docker-compose down
+cd ../controleAcesso
+docker-compose down

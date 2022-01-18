@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Application\Interfaces\IClientesService;
-use App\Http\Requests\StoreClienteRequest;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,5 +65,14 @@ class ClientesController extends Controller
         $cliente = $this->clientesService->salvaCliente($request,$id);
 
         return response()->json(['data'=>$cliente,'user_id' => Auth::id()],200);
+    }
+
+    public function delete($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+
+        Cliente::destroy($id);
+
+        return response()->json(null,204);
     }
 }

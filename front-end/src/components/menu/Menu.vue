@@ -1,14 +1,10 @@
 <!-- menu de navegacao --> 
 <template>
-  <b-navbar toggleable type="dark" variant="dark">
+  <div>
+  <b-navbar toggleable="lg"  type="dark" variant="dark">
       <b-navbar-brand href="#">{{titulo}}</b-navbar-brand>
 
-      <b-navbar-toggle target="navbar-toggle-collapse">
-        <template #default="{ expanded }">
-          <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
-          <b-icon v-else icon="chevron-bar-down"></b-icon>
-        </template>
-      </b-navbar-toggle>
+      <b-navbar-toggle target="navbar-toggle-collapse"></b-navbar-toggle>
 
       <b-collapse id="navbar-toggle-collapse" is-nav>
        <!-- Right Side Of Navbar -->
@@ -46,6 +42,7 @@
         </b-navbar>
       </b-collapse>
   </b-navbar>
+  </div>
 </template>
 <!-- ./ fim do menu de navegacao -->
 
@@ -108,7 +105,7 @@ export default {
           catch(e)
           {
             console.log("erro ao realizar refresh");
-            if(e.status == 400){
+            if(e.status == 400 || e.status == 0){
               self.$router.push({ name: 'logout'});
             }
             console.debug(e);
