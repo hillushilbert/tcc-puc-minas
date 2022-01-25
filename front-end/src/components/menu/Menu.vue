@@ -16,12 +16,17 @@
                 <i class="material-icons app-secondary-color-text"></i> Início
             </router-link>
           </b-nav-item>
-          <b-nav-item>
-            <!-- <a class="nav-link active" aria-current="page" href="#">Active</a> -->
-            <router-link :to="{name:'customer-create'}" class="nav-link active" aria-current="page">
-                <i class="material-icons app-secondary-color-text"></i> Novo Cliente
-            </router-link>
-          </b-nav-item>
+          <b-nav-item-dropdown
+            id="my-nav-pedidos"
+            text="Clientes"
+            toggle-class="nav-link-custom"
+            right>
+            <b-dropdown-item><router-link class="dropdown-item" :to="{name:'customer-list'}">Lista Clientes</router-link></b-dropdown-item>
+            <b-dropdown-item><router-link class="dropdown-item" :to="{name:'customer-create'}">Novo Cliente</router-link></b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <!-- <b-dropdown-item>Three</b-dropdown-item> -->
+          </b-nav-item-dropdown>
+
           <b-nav-item-dropdown
             id="my-nav-pedidos"
             text="Pedidos"
@@ -36,7 +41,7 @@
             <a class="nav-link" href="#">Link</a>
           </b-nav-item> -->
           <b-nav-item>
-            <router-link class="nav-link" :to="{name:'login'}" tabindex="-1" aria-disabled="true">Sair</router-link>
+            <router-link class="nav-link" :to="{name:'logout'}" tabindex="-1" aria-disabled="true">Sair</router-link>
           </b-nav-item>
         <!-- </b-nav> -->
         </b-navbar>

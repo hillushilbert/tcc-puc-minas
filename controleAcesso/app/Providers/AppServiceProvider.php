@@ -23,5 +23,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Application\Interfaces\IRefreshToken',
             'App\Application\RefreshToken'
         );
+
+        $this->app->bind(
+            'App\Application\Interfaces\ILogout',
+            'App\Application\Logout'
+        );
     }
 }

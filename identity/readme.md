@@ -1,6 +1,3 @@
-https://newbedev.com/resources-scopes-permissions-and-policies-in-keycloak
-
-https://medium.com/@harsh.manvar111/keycloak-authorization-service-rbac-1c3204a33a50
 
 https://faun.pub/kong-jwt-scope-base-auth-with-keycloak-b9938a96d281
 

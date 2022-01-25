@@ -19,3 +19,4 @@ $router->get('/', function () use ($router) {
 
 $router->post('/token',['as'=>'auth.token', 'uses' => 'AuthController@token']);
 $router->post('/refresh_token',['as'=>'auth.refresh_token', 'uses' => 'AuthController@refresh_token']);
+$router->post('/logout',['as'=>'auth.logout', 'uses' => 'AuthController@logout']);

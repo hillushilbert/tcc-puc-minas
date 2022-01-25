@@ -15,6 +15,8 @@
 </template>
 <script>
 import BoaMenu from './../menu/Menu.vue';
+import UserService from '../../domain/user/UserService.js';
+
 export default {
   components: {
     'boa-menu': BoaMenu
@@ -24,12 +26,34 @@ export default {
         name: 'Guest'
     };
   },
+  methods: {
+    logout: async function () {
+      let user_service  = new UserService(this.$http);
+      let data = {
+        refresh_token: localStorage.getItem('refresh_token')
+      };
+
+      console.log("realizando refresh token");
+      try
+      {
+        let response = await user_service.logout(data);
+        console.debug(response);    
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('expires_in'); 
+        this.$router.push({ name: 'login'});    
+      }
+      catch(e)
+      {
+        console.debug(e);
+        alert('error ao realizar logout');
+      }
+
+    },
+  },
   created() {
     console.log("CREATED Logout");
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('expires_in'); 
-    this.$router.push({ name: 'login'});    
+    this.logout();
   }
 }
 </script>

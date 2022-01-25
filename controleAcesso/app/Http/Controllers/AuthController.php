@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application\Interfaces\IAuthToken;
+use App\Application\Interfaces\ILogout;
 use App\Application\Interfaces\IRefreshToken;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,11 +13,13 @@ class AuthController extends Controller
     
     protected $authToken;
     protected $refreshToken;
+    protected $logout;
 
-    public function __construct(IAuthToken $authToken, IRefreshToken $refreshToken)
+    public function __construct(IAuthToken $authToken, IRefreshToken $refreshToken, ILogout $logout)
     {
         $this->authToken = $authToken;
         $this->refreshToken = $refreshToken;
+        $this->logout = $logout;
     }
 
     /**
@@ -56,6 +59,17 @@ class AuthController extends Controller
 
 
         $response = $this->refreshToken->execute($request);
+        return response($response->json(),$response->status());  
+    }
+
+    public function logout(Request $request)
+    {
+        $this->validate($request,[
+            'refresh_token' => 'required',
+        ]);
+
+
+        $response = $this->logout->execute($request);
         return response($response->json(),$response->status());  
     }
 

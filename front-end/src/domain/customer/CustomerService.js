@@ -11,37 +11,7 @@ export default class CustomerService extends Service {
         let url = 'mic/clientes';
         
         return await this.post(url,record);
-        /*
-        return await this._resource.post(url,record,
-        this._headers)
-        .then(
-            res => {
-                console.log("CustomerService::iniciar success");
-                return res.json();
-            },
-            err => {
-                console.log("CustomerService:: iniciar error");
-                console.debug(err);
-                if(err.status == 419){
-                    Swal.fire({
-                        title: 'Sessão Expirada',
-                        text: "Sua sessão foi expirada e você será redirecionado para novo login",
-                        icon: 'warning',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'OK'
-                      }).then((result) => {
-                        if (result.value) {
-                          window.location = '/login';
-                        }
-                      });
-                }else{
-                    throw err.body.message;
-                }
-            }
-        );	
-        */
+        
 	}
 	
 	update(record,id){
@@ -99,13 +69,13 @@ export default class CustomerService extends Service {
      * index
      * 
      * retorn promisse com comunicação para retorno de uma colecao
-     * @param {*} id_colecao 
      */
-    index() {
-        return this._resource.get('mic/clientes')
-        .then(res => res.json());
-    }
-
+    async index(){
+        let url = 'mic/clientes';
+        
+        return await this.get(url);
+        
+	}
 
     /**
      * show

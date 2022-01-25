@@ -11,37 +11,7 @@ export default class OrderService extends Service {
         let url = 'pedidos/orders';
         
         return this.post(url,record);
-        /*
-        return await this._resource.post(url,record,
-        this._headers)
-        .then(
-            res => {
-                console.log("OrderService::iniciar success");
-                return res.json();
-            },
-            err => {
-                console.log("OrderService:: iniciar error");
-                console.debug(err);
-                if(err.status == 419){
-                    Swal.fire({
-                        title: 'Sessão Expirada',
-                        text: "Sua sessão foi expirada e você será redirecionado para novo login",
-                        icon: 'warning',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'OK'
-                      }).then((result) => {
-                        if (result.value) {
-                          window.location = '/login';
-                        }
-                      });
-                }else{
-                    throw err.body.message;
-                }
-            }
-        );
-        */	
+        	
 	}
 	
 	update(record,id){

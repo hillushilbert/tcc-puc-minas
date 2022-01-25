@@ -1,5 +1,5 @@
 cd apigateway
-docker-compose build kong
+# docker-compose build kong
 docker-compose up -d db
 sleep 30s
 #docker-compose run --rm kong kong migrations bootstrap
@@ -28,5 +28,8 @@ cd ../infoCadastrais
 docker-compose up -d
 docker-compose ps
 cd ../controleAcesso
+docker-compose up -d
+docker-compose ps
+cd ../pipeline
 docker-compose up -d
 docker-compose ps

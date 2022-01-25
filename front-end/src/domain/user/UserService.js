@@ -38,28 +38,13 @@ export default class UserService extends Service {
     }
 
 
-    /**
-     * reposta
-     * 
-     * realiza post para salvar a resposta de um estudo
-     * 
-     * @param Object dataPost 
-     */
-    logout(dataPost){
+    async logout(dataPost){
 
-		let url = '/logout';
-        
-        if(!dataPost._token){
-            dataPost._token = $('meta[name="csrf-token"]').attr('content'); 
-        }
-
-        localStorage.removeItem('user');
-
-        return this._resource.post(url,dataPost);
-        
+        console.log("UserService.logout");
+       
+        return await this._resource.post('auth/logout',dataPost);                    
     }
 
-    
 
     async get(){
         

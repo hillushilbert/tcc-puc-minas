@@ -1,0 +1,29 @@
+# compose syntax version.
+version: "3.6"
+
+# services declaration.
+services:
+  # Web Application
+  front:
+    # build:
+    #   args:
+    #     user: appcadastro
+    #     uid: 1000
+    #   context: ./docker-compose/nginx
+    #   dockerfile: Dockerfile
+    # image: hillushilbert/frontend:latest
+    image: nginx:alpine
+    container_name: front-app
+    restart: unless-stopped
+    working_dir: /usr/share/nginx/html
+    ports:
+      - 8080:80
+    volumes:
+      - .:/usr/share/nginx/html
+    networks:
+      - pucminas
+  #Nginx Application
+
+networks:
+  pucminas:
+    external: true
