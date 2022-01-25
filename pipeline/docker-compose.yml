@@ -1,0 +1,47 @@
+version: "3"
+services:
+  mongodb:
+    container_name: pipeline_db
+    image: mongo:latest
+    volumes:
+      - ./init/:/docker-entrypoint-initdb.d
+      - pedidos_data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo_root
+      - MONGO_INITDB_ROOT_PASSWORD=pucminas
+      - APP_USER=app_user
+      - APP_PWD=pucminas
+      - DB_NAME=Pedidos
+      - DB_COLLECTION_NAME=pendentes
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+    networks: ['pucminas']
+  pipeline_pedidos_1:
+    build:
+      args:
+        user: apppipeline
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    container_name: pipeline_pedidos_1
+    image: andremoreirafocus/pipeline_pedidos:latest
+    volumes:
+      - ./src/pipeline.conf/:/pipeline.conf
+      - ./pedidoenviar.json/:/pedidoenviar.json
+      - ./pedido-template.json/:/pedido-template.json
+    networks: ['pucminas']
+    depends_on:
+      - mongodb
+  pipeline_pedidos_2:
+    container_name: pipeline_pedidos_2
+    image: andremoreirafocus/pipeline_pedidos:latest
+    networks: ['pucminas']
+    depends_on:
+      - mongodb
+volumes:
+  pedidos_data:
+networks:
+  pucminas:
+    external: true
+

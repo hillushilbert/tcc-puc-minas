@@ -96,6 +96,11 @@ export default {
           };
           try
           {
+            
+            if(data.refresh_token == null || data.refresh_token == undefined){
+              self.$router.push({ name: 'logout'});
+            }
+
             let response = await service.refresh_token(data);
             localStorage.setItem('access_token', response.access_token);
             localStorage.setItem('refresh_token', response.refresh_token);
