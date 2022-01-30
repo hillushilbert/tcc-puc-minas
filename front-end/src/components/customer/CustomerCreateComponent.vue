@@ -7,9 +7,9 @@
           <div class="card">
             <div class="card-header">Novo Cliente</div>
             <div class="card-body">
-              <a href="/home" class="btn btn-primary mb-3"
+              <!-- <a href="/home" class="btn btn-primary mb-3"
                 ><i class="fas fa-arrow-left"></i> Voltar</a
-              >
+              > -->
               <form v-on:submit.prevent>
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -26,7 +26,7 @@
                     >
                   </div>
 
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                     <label for="data_nascimento">Data de Nascimento</label>
                     <input
                       type="text"
@@ -39,6 +39,22 @@
                       >Este campo é obrigatório.</small
                     >
                   </div>
+
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="cpfOuCnpj">CPF</label>
+                    <input
+                      type="text"
+                      :class="alert"
+                      id="cpfOuCnpj"
+                      v-model="cpfOuCnpj"
+                      v-maska="'###.###.###-##'"
+                      v-on:keyup="clearAlertRequire"
+                    />
+                    <small v-if="required_message" class="text-danger"
+                      >Este campo é obrigatório.</small
+                    >
+                  </div>
+
                 </div>
 
                 <div class="row">
@@ -56,22 +72,9 @@
                     >
                   </div>
 
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="cpfOuCnpj">CPF</label>
-                    <input
-                      type="text"
-                      :class="alert"
-                      id="cpfOuCnpj"
-                      v-model="cpfOuCnpj"
-                      v-maska="'###.###.###-##'"
-                      v-on:keyup="clearAlertRequire"
-                    />
-                    <small v-if="required_message" class="text-danger"
-                      >Este campo é obrigatório.</small
-                    >
-                  </div>
+                  
 
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                     <label for="data_nascimento">Telefone</label>
                     <input
                       type="text"
@@ -86,7 +89,7 @@
                     >
                   </div>
 
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                     <label for="sexo">Sexo</label>
                     <select name="sexo" :class="alert" id="sexo" v-model="sexo"  v-on:keyup="clearAlertRequire">
                       <option value=""></option>

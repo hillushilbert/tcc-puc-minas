@@ -5,7 +5,7 @@
     <h3>{{title}}</h3>
     <div class="row">
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
         <label for="origin_adress_number">CEP</label>
         <input
             type="number"
@@ -16,7 +16,7 @@
         />
         </div>   
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-7">
         <label for="origin_adress_street">Rua</label>
         <input
             type="text"
@@ -27,7 +27,7 @@
         />
         </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-2">
         <label for="origin_adress_number">Numero</label>
         <input
             type="number"
@@ -38,7 +38,7 @@
         />
         </div>        
         
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-5">
         <label for="origin_adress_number">Bairro</label>
         <input
             type="text"
@@ -49,7 +49,7 @@
         />
         </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-5">
         <label for="origin_adress_city">Cidade</label>
         <input
             type="text"
@@ -60,7 +60,7 @@
         />
         </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-2">
         <label for="origin_adress_state">Estado</label>
         <input
             type="text"

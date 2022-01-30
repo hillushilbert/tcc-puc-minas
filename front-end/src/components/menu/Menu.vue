@@ -33,6 +33,7 @@
             toggle-class="nav-link-custom"
             right>
             <b-dropdown-item><router-link class="dropdown-item" :to="{name:'order-list'}">Meus Pedidos</router-link></b-dropdown-item>
+            <b-dropdown-item><router-link class="dropdown-item" :to="{name:'order-search'}">Procurar</router-link></b-dropdown-item>
             <b-dropdown-item><router-link class="dropdown-item" :to="{name:'order-create'}">Novo Pedido</router-link></b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item>Three</b-dropdown-item> -->

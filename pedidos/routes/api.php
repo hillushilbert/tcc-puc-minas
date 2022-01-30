@@ -26,3 +26,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('customers', CustomerController::class, ['except' => ['create', 'edit']]);
 Route::resource('suppliers', SupplierController::class, ['except' => ['create', 'edit']]);
 Route::resource('orders', OrderController::class, ['except' => ['create', 'edit']]);
+Route::get('orders/{order}/codigo_rastreamento',[OrderController::class,'showCodigoRastreamento'])->name('orders.show.codigo_rastreamento');

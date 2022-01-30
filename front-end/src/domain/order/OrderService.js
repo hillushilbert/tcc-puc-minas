@@ -91,23 +91,27 @@ export default class OrderService extends Service {
             .then(
                 res => res.json(),
                 err => {
-                    console.log("OrderService:: iniciar error");
-                    console.debug(err);
-                    if(err.status == 419){
-                        Swal.fire({
-                            title: 'Sessão Expirada',
-                            text: "Sua sessão foi expirada e você será redirecionado para novo login",
-                            icon: 'warning',
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'OK'
-                          }).then((result) => {
-                            if (result.value) {
-                              window.location = '/login';
-                            }
-                          });
-                    }                  
+                    // console.debug(err);
+                    return { status : err.status, message : JSON.parse(err.bodyText) };
+                }
+            );
+    }
+    
+    /**
+     * show
+     * 
+     * retorn promisse com comunicação para retorno de uma colecao
+     * @param {*} id_colecao 
+     */    
+     async showByCodigoRastreamento(id) {
+
+        let url = 'pedidos/orders/'+id+"/codigo_rastreamento";
+        
+        return await this._resource.get(url,this._headers)
+            .then(
+                res => res.json(),
+                err => {
+                    return { status : err.status, message : JSON.parse(err.bodyText) };                 
                 }
             );
     }	

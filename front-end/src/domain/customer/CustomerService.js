@@ -42,25 +42,8 @@ export default class CustomerService extends Service {
             .then(
                 res => res.json(),
                 err => {
-                    console.log("CustomerService:: resposta error");
-                    console.debug(err);
-                    if(err.status == 419){
-                        Swal.fire({
-                            title: 'Sessão Expirada',
-                            text: "Sua sessão foi expirada e você será redirecionado para novo login",
-                            icon: 'warning',
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'OK'
-                          }).then((result) => {
-                            if (result.value) {
-                              window.location = '/login';
-                            }
-                          });
-                    }else{
-                        throw Error("Erro ao salvar questão");
-                    }
+                    // console.debug(err);
+                    return { status : err.status, message : JSON.parse(err.bodyText) };
                 }
             ); 
     }
@@ -91,23 +74,8 @@ export default class CustomerService extends Service {
             .then(
                 res => res.json(),
                 err => {
-                    console.log("CustomerService:: iniciar error");
                     console.debug(err);
-                    if(err.status == 419){
-                        Swal.fire({
-                            title: 'Sessão Expirada',
-                            text: "Sua sessão foi expirada e você será redirecionado para novo login",
-                            icon: 'warning',
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'OK'
-                          }).then((result) => {
-                            if (result.value) {
-                              window.location = '/login';
-                            }
-                          });
-                    }                  
+                    return { status : err.status, message : JSON.parse(err.bodyText) };
                 }
             );
     }	

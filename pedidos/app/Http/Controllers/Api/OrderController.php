@@ -99,6 +99,17 @@ class OrderController extends Controller
     {
         $order = $this->findOrder->execute($id);
         return response(['data'=>$order->exportToJson()],200);
+    }    
+    
+    public function showCodigoRastreamento($id)
+    {
+        $order = $this->findOrder->byCodigoRastreamento($id);
+        
+        if(!$order){
+            return response(['message'=>'Código Rastreamento não encontrado'],404);
+        }
+
+        return response(['data'=>$order->exportToJson()],200);
     }
 
     /**

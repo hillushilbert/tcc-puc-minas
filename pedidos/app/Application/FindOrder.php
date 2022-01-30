@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Http;
 class FindOrder implements IFindOrder {
 
 
+    public function byCodigoRastreamento($id) : ?Order
+    {
+        $order = Order::where('codigo_rastreamento',$id)->first();
+        return $order;
+    }
+
     public function execute($id) : Order
     {
         $order = Order::findOrFail($id);

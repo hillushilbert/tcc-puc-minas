@@ -9,6 +9,7 @@ import CustomerEditComponent from './components/customer/CustomerEditComponent.v
 import OrderCreateComponent from './components/order/OrderCreateComponent.vue';
 import OrderEditComponent from './components/order/OrderEditComponent.vue';
 import OrderListComponent from './components/order/OrderListComponent.vue';
+import OrderSearchComponent from './components/order/OrderSearchComponent.vue';
 
 // import Login from './components/home/Login.vue';
 // import Settings from './components/home/Settings.vue';
@@ -37,6 +38,7 @@ export const routes = [
     {path:'/app/customer/edit/:id',  name:'customer-edit', component: CustomerEditComponent, title: "CustomerEditComponent", props: true}, /* falta implementar */
     {path:'/app/customer/list',  name:'customer-list', component: CustomerListComponent, title: "CustomerListComponent"},
     {path:'/app/order/list',  name:'order-list', component: OrderListComponent, title: "OrderListComponent"}, /* falta implementar */
+    {path:'/app/order/search',  name:'order-search', component: OrderSearchComponent, title: "OrderSearchComponent"}, /* falta implementar */
     {path:'/app/order/edit/:id',  name:'order-edit', component: OrderEditComponent, title: "OrderEditComponent", props: true}, /* falta implementar */
 ];
 
