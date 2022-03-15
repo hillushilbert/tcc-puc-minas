@@ -40,16 +40,19 @@ RUN docker-php-ext-install pgsql pdo_pgsql mbstring exif pcntl bcmath gd soap zi
 RUN useradd -G www-data,root -u $uid -d /home/$user $user && echo "$user:$user" | chpasswd && usermod -aG sudo $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user && \
-    chown -R $user:$user /var/www
+    chown -R $user:$user /var/www && \
+    touch /var/www/storage/logs/laravel.log && \
+    chown -R $user:$user /var/www/storage && \
+    chown -R $user:$user /var/www/bootstrap
+
+# Set working directory
+WORKDIR /var/www
 
 COPY . .
 
 USER $user
 
 RUN composer install
-
-# Set working directory
-WORKDIR /var/www
 
 CMD php artisan serve --host=0.0.0.0 --port=8010
 EXPOSE 8010
