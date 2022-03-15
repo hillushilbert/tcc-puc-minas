@@ -40,14 +40,12 @@ RUN docker-php-ext-install pgsql pdo_pgsql mbstring exif pcntl bcmath gd soap zi
 RUN useradd -G www-data,root -u $uid -d /home/$user $user && echo "$user:$user" | chpasswd && usermod -aG sudo $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user && \
-    chown -R $user:$user /var/www && \
-    chown -R $user:$user /var/www/storage && \
-    chown -R $user:$user /var/www/bootstrap
-
+    
+    
 # Set working directory
 WORKDIR /var/www
 
-RUN 
+RUN chown -R $user:$user /var/www 
 
 COPY . .
 
