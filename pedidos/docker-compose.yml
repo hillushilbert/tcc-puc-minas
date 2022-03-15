@@ -19,7 +19,7 @@ services:
       - .:/var/www
     networks:
       - pucminas
-    command: bash -c "php artisan serve --host=0.0.0.0 --port=8010"
+    command: bash -c "composer install && php artisan serve --host=0.0.0.0 --port=8010"
     ports:
       - 8010:8010
 
