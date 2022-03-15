@@ -20,8 +20,6 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libjpeg62-turbo-dev \
     zip \
-    # nodejs \
-    # npm \
     sudo \
     libpq-dev
 
@@ -45,13 +43,13 @@ RUN mkdir -p /home/$user/.composer && \
 # Set working directory
 WORKDIR /var/www
 
-RUN chown -R $user:$user /var/www 
+# RUN chown -R $user:$user /var/www 
 
-COPY . .
+# COPY . .
 
 USER $user
 
-RUN composer install
+# RUN composer install
 
-CMD php artisan serve --host=0.0.0.0 --port=8010
-EXPOSE 8010
+# CMD php artisan serve --host=0.0.0.0 --port=8010
+# EXPOSE 8010
