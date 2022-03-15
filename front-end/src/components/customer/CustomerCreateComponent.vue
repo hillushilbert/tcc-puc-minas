@@ -103,7 +103,7 @@
                 </div>
                 <hr>
                 <!-- origin_adress  -->
-                <address-component title="Endereço" @changed="onChangeOrigin"/>
+                <address-component title="Endereço" @changed="onChangeOrigin" :done="done"/>
                 <hr>
                 
                 <button
@@ -146,7 +146,8 @@ export default {
       numero:"",
       bairro:"",
       cidade:"",
-      uf:""
+      uf:"",
+      done:false
     };
   },
   components: {
@@ -182,9 +183,7 @@ export default {
             nome: this.name,
             data_nascimento: moment(this.data_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD"),
             email: this.email,
-            // cpfOuCnpj: this.cpfOuCnpj.replace(/\D/g, ""),
             cpfOuCnpj: this.cpfOuCnpj,
-            // telefone : this.telefone.replace(/\D/g, ""),
             telefone : this.telefone,
             razao_social: '',
             tp_pessoa: 'F',
@@ -204,9 +203,28 @@ export default {
           response = await order_service.store(data);
           console.log("resposta store order");
           console.debug(response);
-          response.success == true
-                         ? this.clearForm(response.message)
-                         : this.errorSubmit(response.statusText,response.bodyText);
+          
+          if(response.data != undefined)
+          {
+            let self = this;
+            this.$swal.fire({
+                title: 'Cliente Incluido',
+                text: "O Cliente foi incluido com sucesso",
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+              }).then((result) => {
+                self.clearForm(response.message);
+                self.done = false;
+              });
+          }
+          else
+          {
+            self.errorSubmit(response.message.statusText,message.response.bodyText);
+          }
+
         }
         catch(err)
         {
@@ -219,22 +237,12 @@ export default {
       this.data_nascimento = "";
       this.email = "";
       this.cpfOuCnpj = "";
-
-      this.$swal.fire({
-        title: 'Cliente Incluido',
-        text: "Seu Cliente foi incluido e logo será processado",
-        icon: 'success',
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        // if (result.value) {
-        //   window.location = '/login';
-        // }
-      });
+      this.telefone = "";
+      this.sexo = "";
+      this.done = true;
     },
     errorSubmit: function (title,message) {
+      
       this.$swal({
         position: "center",
         icon: "error",

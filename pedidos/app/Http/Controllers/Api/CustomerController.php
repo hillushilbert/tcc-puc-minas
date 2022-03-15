@@ -81,11 +81,11 @@ class CustomerController extends Controller
      * @OA\Post(
      *     path="/api/customer",
      *     operationId="storeCustomer",
-     *     description="Armazena um novo usuario",
+     *     description="Armazena um novo cliente",
      *     security={{"bearerAuth":{}}},
      *     tags={"Domain"},
      *     @OA\RequestBody(
-     *         description="Pet object that needs to be added to the store",
+     *         description="Dados do novo cliente em formato JSON",
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/Customer"),
      *     ),

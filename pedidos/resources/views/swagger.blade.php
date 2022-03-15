@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <title>Swagger UI</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/swagger/swagger-ui.css" >
-    <link rel="icon" type="image/png" href="/swagger/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/swagger/favicon-16x16.png" sizes="16x16" />
+    <link rel="stylesheet" type="text/css" href="/openapi/assets/swagger-ui.css" >
+    <link rel="stylesheet" type="text/css" href="/openapi/assets/style.css" >
+    <link rel="icon" type="image/png" href="/openapi/assets/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/openapi/assets/favicon-16x16.png" sizes="16x16" />
     <style>
       html
       {
@@ -33,14 +34,14 @@
 
   <body>
     <div id="swagger-ui"></div>
-    <script src="/swagger/swagger-ui-bundle.js"> </script>
-    <script src="/swagger/swagger-ui-standalone-preset.js"> </script>
+    <script src="/openapi/assets/swagger-ui-bundle.js"> </script>
+    <script src="/openapi/assets/swagger-ui-standalone-preset.js"> </script>
     <script>
     window.onload = function() {
 
       // Build a system
       const ui = SwaggerUIBundle({
-        url: url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/swagger/openapi.yaml",
+        url: url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/openapi/assets/openapi.yaml",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

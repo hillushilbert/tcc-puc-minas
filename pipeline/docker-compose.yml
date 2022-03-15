@@ -39,7 +39,7 @@ services:
     container_name: pipeline_pedidos_1
     image: andremoreirafocus/pipeline_pedidos:latest
     volumes:
-      - ./src/pipeline.conf/:/var/app/pipeline.conf
+      - ./config/pipeline.conf/:/var/app/pipeline.conf
       - ./pedidoenviar.json/:/var/app/pedidoenviar.json
     networks: ['pucminas']
     depends_on:
@@ -48,7 +48,8 @@ services:
     container_name: pipeline_pedidos_2
     image: andremoreirafocus/pipeline_pedidos:latest
     volumes:
-      - ./src/pipeline.conf/:/var/app/pipeline.conf
+      # - ./src/pipeline.conf/:/var/app/pipeline.conf
+      - ./config/pipeline.conf/:/var/app/pipeline.conf
       - ./pedidoenviar.json/:/var/app/pedidoenviar.json
     networks: ['pucminas']
     depends_on:

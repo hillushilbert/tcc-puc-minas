@@ -9,7 +9,7 @@ class ClientesRepository implements IClientesRepository {
 
     
     public function getAll(){
-        $clientes = Cliente::get();
+        $clientes = Cliente::OrderBy('id','desc')->get();
         return $clientes;
     }
 

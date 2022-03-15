@@ -46,5 +46,7 @@ USER $user
 # Set working directory
 WORKDIR /var/www
 
+RUN chown -R $user:$user /var/www
+
 CMD php artisan serve --host=0.0.0.0 --port=8010
 EXPOSE 8010

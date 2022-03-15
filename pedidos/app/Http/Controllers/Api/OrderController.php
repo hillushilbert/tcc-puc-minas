@@ -45,7 +45,7 @@ class OrderController extends Controller
     /**
      * @OA\Get(
      *     path="/pedidos/orders",
-     *     description="Retorna uma lista de pedidos",
+     *     description="Retorna uma lista de solicitações de entrega",
      *      tags={"Order"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Response(
@@ -70,7 +70,7 @@ class OrderController extends Controller
     /**
      * @OA\Get(
      *     path="/pedidos/orders/{id}",
-     *     description="Retorna um pedido por id",
+     *     description="Retorna uma solicitação de entrega por id",
      *     tags={"Order"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
@@ -101,6 +101,33 @@ class OrderController extends Controller
         return response(['data'=>$order->exportToJson()],200);
     }    
     
+    /**
+     * @OA\Get(
+     *     path="/pedidos/orders/{codigo}/codigo_rastreamento",
+     *     description="Retorna uma solicitação de entrega pelo codigo de rastreamento",
+     *     tags={"Order"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="codigo",
+     *         in="path",
+     *         description="Código de rastreamento",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     * @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\JsonContent(ref="#/components/schemas/Order"),
+     * ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Missing Data",
+     *         @OA\JsonContent()
+     *     )
+     * )
+     */
     public function showCodigoRastreamento($id)
     {
         $order = $this->findOrder->byCodigoRastreamento($id);
@@ -116,7 +143,7 @@ class OrderController extends Controller
      * @OA\Post(
      *     path="/pedidos/orders",
      *     operationId="storeOrder",
-     *     description="Armazena um novo pedido",
+     *     description="Armazena uma solicitação de entrega",
      *     security={{"bearerAuth":{}}},
      *     tags={"Order"},
      *     @OA\RequestBody(

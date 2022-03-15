@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 // Auth::routes();
 
-Route::get('/swaggerV1', function () {
+Route::get('/swagger', function () {
     return view('swagger');
 });
 

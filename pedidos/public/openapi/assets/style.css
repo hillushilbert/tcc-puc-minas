@@ -1,0 +1,24 @@
+.opblock-body p {
+    margin:3px !important;
+}
+
+.opblock-description-wrapper {
+    padding: 7px 10px !important;
+}
+
+.swagger-ui .execute-wrapper {
+    padding: 10px !important;
+  }
+
+  code.language-json {
+      font-size:11px;
+  }
+
+  .swagger-ui .highlight-code > .microlight {
+    max-height: 200px !important;
+  }
+
+  .swagger-ui .opblock .opblock-section-header {
+    min-height: 45px !important;
+    padding: 3px 20px !important;
+  }

@@ -4,7 +4,6 @@
     <!-- origin_adress  -->
     <h3>{{title}}</h3>
     <div class="row">
-
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
         <label for="origin_adress_number">CEP</label>
         <input
@@ -95,15 +94,35 @@ export default {
             city:"",
             state:"",
             zipcode: ""
-        }
+        },
+        clear : false
     };
   },
+  watch: {
+    done: {
+       handler: function(val, oldVal) {
+           if(val == true){
+             this.handleClear();
+           }
+       },
+       deep: true
+    }
+  }, 
   methods: {
 
     clearAlertRequire: function () {
       this.$emit('changed', this.address)
     },
 
+    handleClear: async function () {
+      this.address.street = "";
+      this.address.number = "";
+      this.address.neighborhood = "";
+      this.address.city = "";
+      this.address.state = "";
+      this.address.zipcode = "";
+      this.done = false;
+    },
     handleCep: async function () {
     //   this.clearAlertRequire();
       if (this.address.zipcode != "") {
@@ -112,12 +131,27 @@ export default {
         let response = await this.$http.get(url).then(res => res.json());
         if (!response.erro) {
           this.address.street = response.logradouro;
-        //   this.complement = response.complemento;
           this.address.neighborhood = response.bairro;
           this.address.city = response.localidade;
           this.address.state = response.uf;
           this.clearAlertRequire();
+        }else{
+          this.$swal({
+            position: "center",
+            icon: "error",
+            title: "Erro",
+            text: "CEP informado não foi encontrado no VIACEP",
+            showConfirmButton: false,
+            timer: 3000,
+          });
         }
+      }else{
+          this.address.street = "";
+          this.complement = "";
+          this.address.neighborhood = "";
+          this.address.number = "";
+          this.address.city = "";
+          this.address.state = "";       
       }
     },
     clearForm: function (message) {
@@ -151,7 +185,7 @@ export default {
     },
   },
   created() {
-        this.$via_cep = 'https://viacep.com.br/ws';
+    this.$via_cep = 'https://viacep.com.br/ws';
 		console.log("CREATED");
 		console.debug(this.$route.params.id);		
 		console.debug(this.$props);	

@@ -66,7 +66,8 @@ export default class Service {
             err => {
                 console.log("service::post - iniciar error");
                 console.debug(err);
-                throw Error("Erro ao inserir : " + err.bodyText);
+                // throw Error("Erro ao inserir : " + err.bodyText);
+                return { status : err.status, message : JSON.parse(err.bodyText) }; 
             }
         );	
 	}

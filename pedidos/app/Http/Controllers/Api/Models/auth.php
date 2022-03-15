@@ -28,7 +28,7 @@
     /**
      * @OA\Post(
      *     path="/auth/refresh_token",
-     *     operationId="authToken",
+     *     operationId="RefreshToken",
      *     description="Recupera o token de autenticação JWT",
      *     tags={"Auth"},
      *     @OA\RequestBody(
@@ -40,6 +40,29 @@
      *         response=200,
      *         description="OK",
      *         @OA\JsonContent(ref="#/components/schemas/AuthTokenResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Missing Data",
+     *         @OA\JsonContent(ref="#/components/schemas/ErrorModel")
+     *     )
+     * )
+     */
+
+     /**
+     * @OA\Post(
+     *     path="/auth/logout",
+     *     operationId="AuthLogout",
+     *     description="Recupera o token de autenticação JWT",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         description="Open-id connect response",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/RefreshTokenRequest"),
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="OK"
      *     ),
      *     @OA\Response(
      *         response=422,
