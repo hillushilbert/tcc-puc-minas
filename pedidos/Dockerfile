@@ -42,12 +42,14 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user && \
     chown -R $user:$user /var/www
 
+COPY . .
+
 USER $user
+
+RUN composer install
 
 # Set working directory
 WORKDIR /var/www
-
-
 
 CMD php artisan serve --host=0.0.0.0 --port=8010
 EXPOSE 8010
