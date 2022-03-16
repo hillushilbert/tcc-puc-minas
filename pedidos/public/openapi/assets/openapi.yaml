@@ -6,6 +6,9 @@ servers:
   -
     url: 'http://localhost:8000'
     description: Homologacao
+  -
+    url: 'http://185.187.169.252:8000'
+    description: Apresentacao
 paths:
   /api/customer:
     get:

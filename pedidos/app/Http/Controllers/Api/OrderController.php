@@ -26,6 +26,10 @@ use Illuminate\Support\Facades\DB;
  *      url="http://localhost:8000",
  *      description="Homologacao"
  * ),
+ * @OA\Server(
+ *      url="http://185.187.169.252:8000",
+ *      description="Apresentacao"
+ * ),
  * 
  */
 class OrderController extends Controller
