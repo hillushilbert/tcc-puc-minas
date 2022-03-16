@@ -43,7 +43,8 @@ class Path
         $filaname = storage_path('app/matriz_distancia.csv');
         $handle = fopen($filaname,'r');
         $contadorLinha = 0;
-        while(!feof($handle)){
+        while(!feof($handle))
+        {
             $buffer = fgets($handle,4096);
             $return = explode(';',$buffer);
             foreach($return as $idx=>$value)
@@ -55,6 +56,7 @@ class Path
 
                 if($ufDestino == '') continue;
 
+                if(!empty($data[$ufOrigiem][$ufDestino]))
                 $data[$ufOrigiem][$ufDestino] = intval(trim($value));
             }
             $contadorLinha++;
