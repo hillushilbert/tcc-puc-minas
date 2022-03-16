@@ -73,6 +73,8 @@ class DespachoCommand extends Command
                                         'content-Type' => 'application/json'
                                     ])
                                     ->post($url,$orderDTO->toArray());
+                Log::info("Enviando ao SGE");
+                Log::info(json_encode($orderDTO->toArray()));
                 
                 if($response->status() == 201)
                 {
