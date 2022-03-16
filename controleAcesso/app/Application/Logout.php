@@ -22,7 +22,7 @@ class Logout implements ILogout {
             "refresh_token"=>$request->refresh_token,
             // 'grant_type'=>'refresh_token',
             "client_id"=>env('KEYCLOAK_CLIENT_ID',"app"),
-            'client_secret'=>env('KEYCLOAK_CLIENT_ID','335fe75e-19cd-4d52-8c24-7972f8f78b9b')
+            'client_secret'=>env('KEYCLOAK_CLIENT_SECRET','335fe75e-19cd-4d52-8c24-7972f8f78b9b')
         ];
 
         // $access_token = '';
