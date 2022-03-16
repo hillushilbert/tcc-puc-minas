@@ -29,9 +29,7 @@ class Path
             $dados = $this->loadMatriz();
         }
 
-        return !empty($dados[$this->node1->name][$this->node2->name])
-               ? $dados[$this->node1->name][$this->node2->name] 
-               : 0;
+        return $dados[$this->node1->name][$this->node2->name];
     }
 
     private function loadMatriz()
@@ -45,29 +43,22 @@ class Path
         $filaname = storage_path('app/matriz_distancia.csv');
         $handle = fopen($filaname,'r');
         $contadorLinha = 0;
-        while(!feof($handle))
-        {
+        while(!feof($handle)){
             $buffer = fgets($handle,4096);
             $return = explode(';',$buffer);
             foreach($return as $idx=>$value)
             {
-                if($contadorLinha == 0 || $idx >= count($columns)) continue;
+                if($contadorLinha == 0) continue;
                 
-                if(empty($columns[$contadorLinha]) && empty($columns[$idx]))
-                continue;
-
                 $ufOrigiem = $columns[$contadorLinha];
                 $ufDestino = $columns[$idx];
 
                 if($ufDestino == '') continue;
 
-                if(!empty($data[$ufOrigiem][$ufDestino]))
                 $data[$ufOrigiem][$ufDestino] = intval(trim($value));
             }
             $contadorLinha++;
         }
-        fclose($handle);
-        
         return $data;
     }
 }
