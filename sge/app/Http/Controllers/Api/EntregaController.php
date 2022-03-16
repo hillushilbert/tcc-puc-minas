@@ -48,7 +48,11 @@ class EntregaController extends Controller
         catch(\Exception $e)
         {
             DB::rollBack();
-            return response()->json(['error'=>$e->getMessage()],400);
+            return response()->json([
+                'error'=>$e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ],400);
         }
     }
 }
