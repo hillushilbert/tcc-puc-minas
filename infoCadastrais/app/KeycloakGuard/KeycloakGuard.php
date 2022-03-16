@@ -121,7 +121,7 @@ class KeycloakGuard implements Guard
       return false;
     }
 
-    $this->validateResources();
+    // $this->validateResources();
 
     if ($this->config['load_user_from_database']) {
       $user = $this->provider->retrieveByCredentials($credentials);
@@ -160,9 +160,9 @@ class KeycloakGuard implements Guard
     $token_resource_access = array_keys((array)($this->decodedToken->resource_access ?? []));
     $allowed_resources = explode(',', $this->config['allowed_resources']);
 
-    // if (count(array_intersect($token_resource_access, $allowed_resources)) == 0) {
-    //   throw new ResourceAccessNotAllowedException("The decoded JWT token has not a valid `resource_access` allowed by API. Allowed resources by API: " . $this->config['allowed_resources']);
-    // }
+    if (count(array_intersect($token_resource_access, $allowed_resources)) == 0) {
+      throw new ResourceAccessNotAllowedException("The decoded JWT token has not a valid `resource_access` allowed by API. Allowed resources by API: " . $this->config['allowed_resources']);
+    }
   }
 
   /**
