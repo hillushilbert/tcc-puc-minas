@@ -21,8 +21,8 @@ class AuthToken implements IAuthToken {
             "username"=>$request->email,
             "password"=>$request->password,
             'grant_type'=>'password',
-            "client_id"=>"app",
-            'client_secret'=>'335fe75e-19cd-4d52-8c24-7972f8f78b9b'
+            "client_id"=>env('KEYCLOAK_CLIENT_ID',"app"),
+            'client_secret'=>env('KEYCLOAK_CLIENT_ID','335fe75e-19cd-4d52-8c24-7972f8f78b9b')
         ];
 
         // $access_token = '';
