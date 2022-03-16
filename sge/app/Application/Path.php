@@ -51,6 +51,9 @@ class Path
             {
                 if($contadorLinha == 0) continue;
                 
+                if(empty($columns[$contadorLinha]) && empty($columns[$idx]))
+                continue;
+                
                 $ufOrigiem = $columns[$contadorLinha];
                 $ufDestino = $columns[$idx];
 
