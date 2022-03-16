@@ -29,7 +29,7 @@ class Path
             $dados = $this->loadMatriz();
         }
 
-        return $dados[$this->node1->name][$this->node2->name];
+        return $dados[$this->node1->name][$this->node2->name] ?? 0;
     }
 
     private function loadMatriz()
