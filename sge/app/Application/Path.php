@@ -49,11 +49,11 @@ class Path
             $return = explode(';',$buffer);
             foreach($return as $idx=>$value)
             {
-                if($contadorLinha == 0) continue;
+                if($contadorLinha == 0 || $idx >= count($columns)) continue;
                 
                 if(empty($columns[$contadorLinha]) && empty($columns[$idx]))
                 continue;
-                
+
                 $ufOrigiem = $columns[$contadorLinha];
                 $ufDestino = $columns[$idx];
 
