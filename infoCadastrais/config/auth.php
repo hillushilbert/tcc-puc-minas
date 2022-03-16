@@ -36,7 +36,7 @@ return [
 
     'guards' => [
         'api' => [
-            'driver' => 'keycloak', # <-- Set the API guard driver to "keycloak"
+            'driver' => 'token', # <-- Set the API guard driver to "keycloak"
             'provider' => 'users',
         ],
     ],
