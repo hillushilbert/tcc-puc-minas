@@ -37,7 +37,7 @@ Vue.use(DropdownPlugin)
 Vue.use(TablePlugin)
 
 // http usará sempre o endereço abaixo
-Vue.http.options.root = 'http://localhost:8000';
+Vue.http.options.root = 'http://185.187.169.252:8000';
 
 const router = new VueRouter({
   routes : routes,
