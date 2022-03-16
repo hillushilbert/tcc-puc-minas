@@ -66,6 +66,8 @@ class Path
             }
             $contadorLinha++;
         }
+        fclose($handle);
+        
         return $data;
     }
 }
