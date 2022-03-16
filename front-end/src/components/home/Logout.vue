@@ -38,16 +38,16 @@ export default {
       {
         let response = await user_service.logout(data);
         console.debug(response);    
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('expires_in'); 
-        this.$router.push({ name: 'login'});    
       }
       catch(e)
       {
         console.debug(e);
         alert('error ao realizar logout');
       }
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('expires_in'); 
+      this.$router.push({ name: 'login'}); 
 
     },
   },
